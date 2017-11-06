@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -41,7 +42,12 @@ public class Calculator extends JPanel {
 	 *            a list of operators to be added to the calculator
 	 */
 	public Calculator(List<Operator> supportedOperatorList) {
-		// TODO implement this constructor
+		this.supportedOperatorList = new ArrayList<Operator>();
+		
+		for (Operator op: supportedOperatorList) {
+			this.supportedOperatorList.add(op);
+		} // avoided aliasing!
+		//may need to check for null or empty lists here or later
 	}
 
 	/**

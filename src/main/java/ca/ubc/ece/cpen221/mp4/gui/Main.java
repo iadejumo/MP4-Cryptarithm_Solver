@@ -23,7 +23,22 @@ public class Main {
 	}
 	
 	private static void createAndShowSetupScreen() {
-		List<Operator> operators = new ArrayList<>();		
+		List<Operator> operators = new ArrayList<Operator>();	
+		Operator a = new AdditionOperator();
+		Operator s = new SubtractionOperator();
+		Operator m = new MultiplicationOperator();
+		Operator d = new DivisionOperator();
+		Operator e = new ExponentiationOperator();
+		Operator n = new NegationOperator();
+		Operator abs = new AbsoluteValueOperator();
+		
+		operators.add(a);
+		operators.add(s);
+		operators.add(m);
+		operators.add(d);
+		operators.add(e);
+		operators.add(n);
+		operators.add(abs);
 		Calculator calculator = new Calculator(operators);
 		calculator.launch();
 	}
