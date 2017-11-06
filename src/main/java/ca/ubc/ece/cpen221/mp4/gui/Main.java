@@ -23,7 +23,16 @@ public class Main {
 	}
 	
 	private static void createAndShowSetupScreen() {
+		List<Operator> operators = getListOfAllOperators();
+
+		Calculator calculator = new Calculator(operators);
+		calculator.launch();
+	}
+	
+	private static List<Operator> getListOfAllOperators(){
 		List<Operator> operators = new ArrayList<Operator>();	
+		
+		// create every operator object
 		Operator a = new AdditionOperator();
 		Operator s = new SubtractionOperator();
 		Operator m = new MultiplicationOperator();
@@ -32,6 +41,7 @@ public class Main {
 		Operator n = new NegationOperator();
 		Operator abs = new AbsoluteValueOperator();
 		
+		// add each operator to list
 		operators.add(a);
 		operators.add(s);
 		operators.add(m);
@@ -39,8 +49,7 @@ public class Main {
 		operators.add(e);
 		operators.add(n);
 		operators.add(abs);
-		Calculator calculator = new Calculator(operators);
-		calculator.launch();
+		return operators;
 	}
 
 }

@@ -10,5 +10,10 @@ public class AbsoluteValueOperator implements UnaryOperator {
 			return (-arg);
 		return (arg);
 	}
+	
+	@Override
+	public String toString() {
+		return ("|x|");
+	}
 
 }

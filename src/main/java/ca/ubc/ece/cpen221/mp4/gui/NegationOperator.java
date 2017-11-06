@@ -9,4 +9,8 @@ public class NegationOperator implements UnaryOperator {
 		return (-arg);
 	}
 
+	@Override
+	public String toString() {
+		return ("*(-1)");
+	}
 }
