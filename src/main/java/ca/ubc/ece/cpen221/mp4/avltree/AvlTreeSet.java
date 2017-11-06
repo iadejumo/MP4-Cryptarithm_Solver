@@ -10,6 +10,7 @@ public class AvlTreeSet {
      */
     public AvlTreeSet() {
         mRoot = new Node();
+        System.out.print("Line Test");
     }
 
     /**
