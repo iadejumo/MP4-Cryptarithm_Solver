@@ -6,6 +6,10 @@ package ca.ubc.ece.cpen221.mp4.expression;
  */
 public class DerivativeExpression implements Expression {
 		
+	public static final double DELTA_X = Math.pow(10, -9);
+	Expression fn;
+	VariableExpression independentVar;
+	
 	/**
 	 * Create an expression representing the derivative of the specified
 	 * function with respect to the specified variable.
@@ -16,13 +20,18 @@ public class DerivativeExpression implements Expression {
 	 */
 	public DerivativeExpression(Expression fn, 
 					VariableExpression independentVar) {
-		// TODO implement this constructor
+		this.fn = fn;
+		this.independentVar = independentVar;
 	}
 
 	@Override
 	public double eval() {
-		// TODO implement this method
-		return 0; // change this
+		double fnWithoutDelta = fn.eval();
+		independentVar.store(independentVar.eval()+DELTA_X);
+		
+		double fnWithDelta = fn.eval();
+		independentVar.store(independentVar.eval()-DELTA_X);
+		return ( (fnWithDelta - fnWithoutDelta)/DELTA_X);
 	}
 	
 
