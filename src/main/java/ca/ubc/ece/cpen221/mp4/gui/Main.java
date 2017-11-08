@@ -32,23 +32,14 @@ public class Main {
 	private static List<Operator> getListOfAllOperators(){
 		List<Operator> operators = new ArrayList<Operator>();	
 		
-		// create every operator object
-		Operator a = new AdditionOperator();
-		Operator s = new SubtractionOperator();
-		Operator m = new MultiplicationOperator();
-		Operator d = new DivisionOperator();
-		Operator e = new ExponentiationOperator();
-		Operator n = new NegationOperator();
-		Operator abs = new AbsoluteValueOperator();
-		
 		// add each operator to list
-		operators.add(a);
-		operators.add(s);
-		operators.add(m);
-		operators.add(d);
-		operators.add(e);
-		operators.add(n);
-		operators.add(abs);
+		operators.add(new AdditionOperator());
+		operators.add(new SubtractionOperator());
+		operators.add(new MultiplicationOperator());
+		operators.add(new DivisionOperator());
+		operators.add(new ExponentiationOperator());
+		operators.add(new NegationOperator());
+		operators.add(new AbsoluteValueOperator());
 		return operators;
 	}
 

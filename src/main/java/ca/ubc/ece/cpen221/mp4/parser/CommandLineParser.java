@@ -3,11 +3,20 @@
  */
 package ca.ubc.ece.cpen221.mp4.parser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
+import ca.ubc.ece.cpen221.mp4.gui.AbsoluteValueOperator;
+import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
+import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
+import ca.ubc.ece.cpen221.mp4.gui.ExponentiationOperator;
+import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
+import ca.ubc.ece.cpen221.mp4.gui.NegationOperator;
+import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 /**
@@ -25,9 +34,7 @@ public class CommandLineParser {
 	 */
 	public static void main(String[] args) {
 
-		Set<Operator> operatorSet = new HashSet<Operator>();
-
-		// TODO add operators to operatorSet
+		Set<Operator> operatorSet = getSetOfAllOperators();
 
 		ExpressionParser parser = new ExpressionParser(operatorSet, new ExpressionMaker());
 
@@ -43,6 +50,20 @@ public class CommandLineParser {
 			}
 		} while (true);
 
+	}
+	
+	private static Set<Operator> getSetOfAllOperators(){
+		Set<Operator> operators = new HashSet<Operator>();	
+		
+		// add each operator to list
+		operators.add(new AdditionOperator());
+		operators.add(new SubtractionOperator());
+		operators.add(new MultiplicationOperator());
+		operators.add(new DivisionOperator());
+		operators.add(new ExponentiationOperator());
+		operators.add(new NegationOperator());
+		operators.add(new AbsoluteValueOperator());
+		return operators;
 	}
 
 }

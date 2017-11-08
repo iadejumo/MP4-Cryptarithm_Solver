@@ -25,19 +25,18 @@ public class VariableExpression implements Expression {
 	 *            the name of the variable
 	 */
 	public VariableExpression(String name) {
-		// TODO Implement this constructor
+		this.name = name;
+		this.value = 0;
 	}
 
 	@Override
 	public double eval() {
-		// TODO implement this method
-		return -1; // change this
+		return value;
 	}
 
 	@Override
 	public String toString() {
-		// TODO implement this method
-		return null; // change this
+		return name;
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class VariableExpression implements Expression {
 	 *            the new value of this variable
 	 */
 	public void store(double value) {
-		// TODO implement this method
+		this.value = value;
 	}
 
 	/**
