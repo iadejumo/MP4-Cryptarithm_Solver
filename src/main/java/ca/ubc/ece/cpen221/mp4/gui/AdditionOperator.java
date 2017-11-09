@@ -9,8 +9,5 @@ public class AdditionOperator implements BinaryOperator {
 		return (arg1 + arg2);
 	}
 
-	@Override
-	public String toString() {
-		return ("+");
-	}
+	
 }
