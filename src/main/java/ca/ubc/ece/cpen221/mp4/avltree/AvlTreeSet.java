@@ -27,7 +27,9 @@ public class AvlTreeSet {
      * @param value The integer to insert.
      */
     public void insert(int value) {
-        mRoot = mRoot.insert(value);
+        if (!mRoot.contains(value)) {
+        	mRoot = mRoot.insert(value);
+        }
     }
 
     /**
