@@ -40,6 +40,8 @@ public class Main {
 		operators.add(new ExponentiationOperator());
 		operators.add(new NegationOperator());
 		operators.add(new AbsoluteValueOperator());
+		operators.add(new SineOperator());
+		operators.add(new CoseOperator());
 		return operators;
 	}
 

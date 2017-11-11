@@ -26,8 +26,8 @@ public class Calculator extends JPanel {
 
 	// CHECKSTYLE:OFF
 	private List<Operator> supportedOperatorList;
-	private static final int WIDTH = 5000;
-	private static final int HEIGHT = 2500;
+	private static final int WIDTH = 500;
+	private static final int HEIGHT = 250;
 
 	private JLabel runningValueDisplay;
 	private double runningValue;
@@ -72,19 +72,19 @@ public class Calculator extends JPanel {
 		displayConstraint.fill = GridBagConstraints.HORIZONTAL;
 		displayConstraint.gridx = 0;
 		displayConstraint.gridy = 0;
-		displayConstraint.gridwidth = 20;
+		displayConstraint.gridwidth = 2;
 		panel.add(displayPanel, displayConstraint);
 
 		JPanel numberPanel = setupNumberPad();
 		GridBagConstraints numberConstraint = new GridBagConstraints();
 		numberConstraint.gridx = 0;
-		numberConstraint.gridy = 10;
+		numberConstraint.gridy = 1;
 		panel.add(numberPanel, numberConstraint);
 
 		JPanel operatorPanel = setupOperators();
 		GridBagConstraints operatorConstraint = new GridBagConstraints();
-		operatorConstraint.gridx = 10;
-		operatorConstraint.gridy = 10;
+		operatorConstraint.gridx = 1;
+		operatorConstraint.gridy = 1;
 		panel.add(operatorPanel, operatorConstraint);
 		add(panel);
 		this.setDisplay(0.0); // Reset to zero on launch

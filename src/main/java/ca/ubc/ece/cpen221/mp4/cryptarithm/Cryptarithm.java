@@ -1,7 +1,13 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+import ca.ubc.ece.cpen221.mp4.expression.Expression;
 
 /**
  * Cryptarithm - a datatype that represents a cryptarithm
@@ -9,6 +15,8 @@ import java.util.Map;
  */
 public class Cryptarithm {
 
+	
+	
 	/**
 	 * Cryptarithm constructor
 	 * 
@@ -16,10 +24,11 @@ public class Cryptarithm {
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
 	 */
-	public Cryptarithm(String[] cryptarithm) {
-		// TODO implement this constructor
-	}
+	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException{
+		
+	} //need to change precondition or post for wrong format parameter
 
+	// differentiate capitals?
 	/**
 	 * Find solutions to the cryptarithm
 	 * 

@@ -12,10 +12,12 @@ import java.util.Set;
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
 import ca.ubc.ece.cpen221.mp4.gui.AbsoluteValueOperator;
 import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
+import ca.ubc.ece.cpen221.mp4.gui.CoseOperator;
 import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
 import ca.ubc.ece.cpen221.mp4.gui.ExponentiationOperator;
 import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
 import ca.ubc.ece.cpen221.mp4.gui.NegationOperator;
+import ca.ubc.ece.cpen221.mp4.gui.SineOperator;
 import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
@@ -63,6 +65,8 @@ public class CommandLineParser {
 		operators.add(new ExponentiationOperator());
 		operators.add(new NegationOperator());
 		operators.add(new AbsoluteValueOperator());
+		operators.add(new SineOperator());
+		operators.add(new CoseOperator());
 		return operators;
 	}
 
