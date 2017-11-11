@@ -98,5 +98,43 @@ public class AvlTreeTest {
 	
 		//System.out.println(avl.size());		
 	}
+	
+	@Test
+	public void Test6() {
+		//Testing balancing of tree on with more branches
+		AvlTreeSet avl = new AvlTreeSet();
+				
+		avl.insert(1);
+		avl.insert(2);
+		avl.insert(3);
+		avl.insert(4);
+		avl.insert(5);
+		avl.insert(10);
+		avl.insert(7);
+		avl.insert(8);
+		avl.insert(6);
+		avl.insert(9);
+		
+		avl.remove(1);
+		
+		//avl.insert(0);
+		
+		avl.insert(1);
+		assertEquals(10, avl.size());
+		System.out.print(avl);
+		assertEquals(3, avl.getHeight());
+		
+		avl.remove(9);
+		avl.remove(10);
+		
+		avl.insert(-1);
+		avl.insert(-2);
+		avl.insert(-3);
+		//avl.insert(13);
+		//avl.insert(4);	
+		
+	
+		//System.out.println(avl.size());		
+	}
 
 }
