@@ -26,13 +26,15 @@ import ca.ubc.ece.cpen221.mp4.parser.NumberExpression;
 public class Cryptarithm {
 
 	private static final int MAX_SIZE = 10;
+	private static final int INVALID = -1;
+	private static final Map<String, BinaryOperator> operators = new HashMap<String, BinaryOperator>();
+
 	private Expression exp1; // expression on left of equals
 	private Expression exp2; // expression on right of equals
 
 	// map of Strings of letters, to their respective variable expressions
 	// RI: size is less than 11, no repeated variable names
-	private Map<String, VariableExpression> allLetters;
-	private static final Map<String, BinaryOperator> operators =new HashMap<String,BinaryOperator>();
+	private Map<String, VariableExpression> mapOfUsedLetters;
 
 	/**
 	 * Cryptarithm constructor
@@ -44,70 +46,57 @@ public class Cryptarithm {
 	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException {
 		// find position of equal sign, and throw exception if invalid input
 		int equalSignPos = findEqualsPos(cryptarithm);
-		if (equalSignPos==-1 ||!checkIfValidCryptarithmFormat(cryptarithm))
+		if (equalSignPos == INVALID || !checkIfValidCryptarithmFormat(cryptarithm))
 			throw new IllegalArgumentException("Bad input!");
-		
-		//initiate important variables
+
+		// initiate important variables
 		initiateOperators();
-		allLetters = new HashMap<String, VariableExpression>();
+		mapOfUsedLetters = new HashMap<String, VariableExpression>();
 		Stack<Expression> stackOfExpressions = new Stack<Expression>();
 		Stack<BinaryOperator> stackOfOperators = new Stack<BinaryOperator>();
 
-		for (int k=0;k<equalSignPos;k++) {
-			if (k%2==0)
-				stackOfExpressions.push(turnToExpression(cryptarithm[k],allLetters));
-			else 
+		// make stack of expression and operators for left hand side of equation
+		// eg ["SEND","+","MORE","-","MONEY"] => Stack["MONEY","MORE","SEND"] and Stack["-","+"]
+		for (int k = 0; k < equalSignPos; k++) {
+			if (k % 2 == 0)
+				stackOfExpressions.push(stringToExpression(cryptarithm[k], mapOfUsedLetters));
+			else
 				stackOfOperators.push(operators.get(cryptarithm[k]));
 		}
-		exp1 = stacksToExpression(stackOfExpressions,stackOfOperators);
-		// should already be empty
-		stackOfExpressions.removeAllElements();
-		stackOfOperators.removeAllElements();
-		
-		for (int k=equalSignPos;k<cryptarithm.length;k++) {
-			if (k%2==0)
-				stackOfExpressions.push(turnToExpression(cryptarithm[k],allLetters));
-			else 
+		exp1 = stacksToExpression(stackOfExpressions, stackOfOperators);
+	
+		// should already be empty, but double check
+
+		// repeat for the right hand side of equation
+		for (int k = equalSignPos; k < cryptarithm.length; k++) {
+			if (k % 2 == 0)
+				stackOfExpressions.push(stringToExpression(cryptarithm[k], mapOfUsedLetters));
+			else
 				stackOfOperators.push(operators.get(cryptarithm[k]));
 		}
-		exp2 = stacksToExpression(stackOfExpressions,stackOfOperators);
-		
-		if (allLetters.size()>MAX_SIZE) {
+		exp2 = stacksToExpression(stackOfExpressions, stackOfOperators);
+
+		// check if too many letters
+		if (mapOfUsedLetters.size() > MAX_SIZE) 
 			throw new IllegalArgumentException("Too many letters!");
-		}
 
 	} // need to change precondition or post for wrong format parameter
-
 	// differentiate capitals?
-	
+
+	// initate the Map to be able to use binary operators
 	private static void initiateOperators() {
-		operators.put("+",new AdditionOperator());
-		operators.put("-",new SubtractionOperator());
-		operators.put("*",new MultiplicationOperator());
-		operators.put("/",new DivisionOperator());
-	}
-	
-	private static void insertToStack(String[] cryptarithmPart,Map<String,VariableExpression> allLetters) {
-		
-	}
-	public static void main(String[] args) {
-
-		/*
-		 * Map<String,VariableExpression> a = new HashMap<String,VariableExpression>();
-		 * Expression e = turnToExpression("SEND",a); int k = 1; for (String s:
-		 * a.keySet()) { a.get(s).store(k); } a.get("S").store(7); a.get("E").store(8);
-		 * a.get("N").store(6); a.get("D").store(5); System.out.println(e.eval());
-		 * a.get("S").store(9); System.out.println(e.eval());
-		 */
-
+		operators.put("+", new AdditionOperator());
+		operators.put("-", new SubtractionOperator());
+		operators.put("*", new MultiplicationOperator());
+		operators.put("/", new DivisionOperator());
 	}
 
-	// takes a String and map of used letters
-	// returns expression with sum of letters\
+	// takes 1. a String and 2. a map of used letters
+	// returns expression with sum of letters
 	// eg. "SEND" => S*1000 + E*100* + N*10 + D*1
-	// modifies Map to have S, E, N and D variableExpression
-	private static Expression turnToExpression(String word, Map<String, VariableExpression> usedLetters) {
-		List<Expression> lettersInOrder = new ArrayList<Expression>();
+	// modifies Map to have S, E, N and D variableExpressions
+	private static Expression stringToExpression(String word, Map<String, VariableExpression> usedLetters) {
+		List<Expression> multipliedLetterVariables = new ArrayList<Expression>();
 		String letter;
 
 		for (int k = 0, multiplier = 1; k < word.length(); k++) {
@@ -119,48 +108,61 @@ public class Cryptarithm {
 			if (!(usedLetters.containsKey(letter)))
 				usedLetters.put(letter, new VariableExpression(letter));
 
-			// multiply expression and add it to the list
+			// multiply variableExpression and add it to the list
 			VariableExpression var = usedLetters.get(letter);
 			Expression exp = new BinaryOperatorExpression(new MultiplicationOperator(),
 					new NumberExpression(multiplier), var);
 			// check out if you can have list of operators
-			lettersInOrder.add(exp);
+			multipliedLetterVariables.add(exp);
 		}
 
 		// add the expressions in the list
-		return addList(lettersInOrder, 0);
-	}
-	
-	private static Expression stacksToExpression(Stack<Expression> stackOfExpressions, Stack<BinaryOperator> stackOfOperators) {
-		if (stackOfOperators.isEmpty())
-			return stackOfExpressions.pop();
-		return new BinaryOperatorExpression(stackOfOperators.pop(),stackOfExpressions.pop(),stacksToExpression(stackOfExpressions,stackOfOperators));
+		return addList(multipliedLetterVariables, 0);
 	}
 
-	// adds the
+	// takes 1. a stack of Expressions 2. a stack of operators
+	// must have stackOfExpressions.size() = stackOfOperators.size() + 1 always
+	// does performs operators 
+	// eg ["MONEY,"MORE","SEND"] x ["+","-"] => SEND + MORE - MONEY
+	
+	private static Expression stacksToExpression(Stack<Expression> stackOfExpressions,
+			Stack<BinaryOperator> stackOfOperators) {
+		// base case: once it is at the end, return the last expression left
+		if (stackOfOperators.isEmpty())
+			return stackOfExpressions.pop();
+		
+		// recursive step: pop out the next operators and expression and apply
+		BinaryOperator operator = stackOfOperators.pop();
+		Expression expression = stackOfExpressions.pop();
+		return new BinaryOperatorExpression(operator,
+				stacksToExpression(stackOfExpressions, stackOfOperators), expression );
+	}
+
+	// adds a list of expressions
 	// recursive method that adds up the expression from index to
-	// lettersInOrder.size()
-	private static Expression addList(List<Expression> lettersInOrder, int index) {
+	// listOfExpressions.size()
+	private static Expression addList(List<Expression> listOfExpressions, int index) {
 		// base case, add 0
-		if (index == lettersInOrder.size())
+		if (index == listOfExpressions.size())
 			return new NumberExpression(0);
 
 		// recursively add the next expression
-		return new BinaryOperatorExpression(new AdditionOperator(), lettersInOrder.get(index),
-				addList(lettersInOrder, index + 1));
+		return new BinaryOperatorExpression(operators.get("+"), listOfExpressions.get(index),
+				addList(listOfExpressions, index + 1));
 	}
 
-	// maybe need way to check if valid cryptarithm
 	// takes in String[] cryptarithm
 	// returns index of "=", but returns -1 if it is not there or if k is not in
 	// valid position
 	private static int findEqualsPos(String[] cryptarithm) {
+		// look for index of "="
 		int k;
 		for (k = 0; k < cryptarithm.length; k++) {
 			if (cryptarithm[k].equals("="))
 				break;
 		}
 
+		// return k index if it is an odd number
 		if (k % 2 == 1)
 			return k;
 		return -1;
@@ -170,27 +172,26 @@ public class Cryptarithm {
 	// or if it has non operators at odd index positions
 	// or if it has non letter strings at even positions
 	// otherwise returns true
-	private static boolean checkIfValidCryptarithmFormat(String [] cryptarithm) {
+	private static boolean checkIfValidCryptarithmFormat(String[] cryptarithm) {
 		// check for null or empty or invalid length
 		if (cryptarithm == null || cryptarithm.length == 0 || cryptarithm.length % 2 == 0)
 			return false;
-		
+
 		// check for non operators at odd indexes
-		for (int k=1;k<cryptarithm.length;k=k+2) {
+		for (int k = 1; k < cryptarithm.length; k = k + 2) {
 			if (!(checkIfOperatorString(cryptarithm[k])))
 				return false;
 		}
-		
-		//check for non letter strings at even positions
+
+		// check for non letter strings at even positions
 		char[] chars;
-		for (int k=0;k<cryptarithm.length;k=k+2) {
+		for (int k = 0; k < cryptarithm.length; k = k + 2) {
 			chars = cryptarithm[k].toCharArray();
-			for (char c: chars) {
+			for (char c : chars) {
 				if (!(Character.isLetter(c)))
 					return false;
 			}
 		}
-		
 		return true;
 	}
 
