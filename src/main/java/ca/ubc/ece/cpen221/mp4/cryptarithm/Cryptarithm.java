@@ -3,7 +3,6 @@ package ca.ubc.ece.cpen221.mp4.cryptarithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,13 +28,14 @@ public class Cryptarithm {
 	private static final int INVALID = -1;
 	private static final Map<String, BinaryOperator> operators = new HashMap<String, BinaryOperator>();
 
-	private Expression exp1; // expression on left of equals
-	private Expression exp2; // expression on right of equals
+	private final Expression exp1; // expression on left of equals
+	private final Expression exp2; // expression on right of equals
 
 	// map of Strings of letters, to their respective variable expressions
 	// RI: size is less than 11, no repeated variable names
-	private Map<String, VariableExpression> mapOfUsedLetters;
+	private final Map<String, VariableExpression> mapOfUsedLetters;
 
+	private final Set<String> firstLetters;
 	/**
 	 * Cryptarithm constructor
 	 * 
@@ -54,6 +54,8 @@ public class Cryptarithm {
 
 		// initiate important variables
 		initiateOperators();
+		firstLetters = getFirstLetters(cryptarithm);
+		
 		mapOfUsedLetters = new HashMap<String, VariableExpression>();
 		Stack<Expression> stackOfExpressions = new Stack<Expression>();
 		Stack<BinaryOperator> stackOfOperators = new Stack<BinaryOperator>();
@@ -85,6 +87,15 @@ public class Cryptarithm {
 	} // need to change precondition or post for wrong format parameter
 		// differentiate capitals?
 
+	// gets the first letters from the array of String 
+	private static Set<String> getFirstLetters(String[] cryptarithm){
+		Set<String> firstLetters = new HashSet<String>();
+		for (int k=0;k<cryptarithm.length;k=k+2) {
+			firstLetters.add(cryptarithm[k].substring(0, 1));
+		}
+		return firstLetters;
+	}
+	
 	public static void main(String[] args) {
 		String[] c = {"SEND","+","MORE","=","MONEY"};
 		Cryptarithm crypt = new Cryptarithm(c);
@@ -94,9 +105,14 @@ public class Cryptarithm {
 			crypt.mapOfUsedLetters.get(s).store(1);
 		}
 		crypt.mapOfUsedLetters.get("M").store(4);
+		crypt.mapOfUsedLetters.get("O").store(7);
 		System.out.println("Exp 1 = " + crypt.exp1.eval());
 		System.out.println("Exp 2 = " + crypt.exp2.eval());
+		System.out.println("Map: "+crypt.mapOfUsedLetters);
+		System.out.println("Operators: "+operators);
+		System.out.println("First Letters: "+crypt.firstLetters);
 	}
+	
 	// initate the Map to be able to use binary operators
 	private static void initiateOperators() {
 		operators.put("+", new AdditionOperator());
