@@ -1,7 +1,5 @@
 package ca.ubc.ece.cpen221.mp4.avltree;
 
-//import avltree.AvlTreeSet.Node;
-
 public class AvlTreeSet {
     private Node mRoot;
 
@@ -29,7 +27,9 @@ public class AvlTreeSet {
      * @param value The integer to insert.
      */
     public void insert(int value) {
-        mRoot = mRoot.insert(value);
+        if (!mRoot.contains(value)) {
+        	mRoot = mRoot.insert(value);
+        }
     }
 
     /**
@@ -142,7 +142,7 @@ public class AvlTreeSet {
             mLeft = left;
             mRight = right;
             mHeight = Math.max(left.getHeight(), right.getHeight()) + 1;
-            mSize = left.size() + right.size();
+            mSize = left.size() + right.size() + 1;
         }
 
         public int size() {
@@ -219,6 +219,10 @@ public class AvlTreeSet {
 
             if (value < mValue) {
                 return mLeft.contains(value);
+            }
+            
+            if (value > mValue) {
+                return mRight.contains(value);
             }
 
             return false;
