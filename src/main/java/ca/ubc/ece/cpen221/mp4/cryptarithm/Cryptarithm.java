@@ -46,7 +46,7 @@ public class Cryptarithm {
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
 	 */
-	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException {
+	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException { 
 		// find position of equal sign, and throw exception if invalid input
 		if (!checkIfValidCryptarithmFormat(cryptarithm))
 			throw new IllegalArgumentException("Bad input!");
@@ -251,12 +251,12 @@ public class Cryptarithm {
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
 		List<Map<Character, Integer>> solutions = new ArrayList<Map<Character, Integer>> ();
-		List<Integer> allDigits = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+		Integer[] allDigits = {0,1,2,3,4,5,6,7,8,9};
 		int numLetters = mapOfUsedLetters.size();
 		
 		//Generate all permutations of the 10 digits
 		Permutation<Integer> permutation = new Permutation<Integer> (allDigits);
-		List<List<Integer>> allPermutations = permutation.getAllPermutations();
+		List<Integer[]> allPermutations = permutation.getAllPermutations();
 		
 		//Creates a list of all the Letters used within the cryptarithm
 		List<String> lettersList = new ArrayList<String>();
@@ -269,21 +269,21 @@ public class Cryptarithm {
 		}
 		
 		//Filter out all solution where any letter that appears first is equal to zero.
-		List<List<Integer>> nonZeroFirstPermutations = new ArrayList<List<Integer>>();
-		for (List<Integer> possiblePermutation: allPermutations) {
+		List<Integer[]> nonZeroFirstPermutations = new ArrayList<Integer[]>();
+		for (Integer[] possiblePermutation: allPermutations) {
 			if(checkIfFirstIsZero(possiblePermutation, firstLetterIndices)) {
 				nonZeroFirstPermutations.add(possiblePermutation);
 			}
 		}
 		
 		//Checks possible possible solutions and stores the ones that yield the correct result
-		for (List<Integer> singlePermutation: nonZeroFirstPermutations) {
+		for (Integer[] singlePermutation: nonZeroFirstPermutations) {
 			if(evaluateSingleExpression(lettersList, singlePermutation)) {
 				//Creates a map for the given solution if it is correct
 				Map<Character, Integer> singleSolution = new HashMap <Character, Integer>();
 				for(int index = 0; index < numLetters; index++) {
 					Character letter = lettersList.get(index).charAt(0);
-					Integer value = singlePermutation.get(index);
+					Integer value = singlePermutation[index];
 					singleSolution.put(letter, value);
 				}
 				
@@ -319,9 +319,9 @@ public class Cryptarithm {
 	 * 
 	 * @return true - if and only if none of the Characters that appear first in any expression is equals to zero
 	 */
-	private boolean checkIfFirstIsZero (List<Integer> possiblePermutation, List<Integer> firstLetterIndices) {
+	private boolean checkIfFirstIsZero (Integer[] possiblePermutation, List<Integer> firstLetterIndices) {
 		for(Integer indexOfFirst: firstLetterIndices) {
-			if(possiblePermutation.get(indexOfFirst) == 0) {
+			if(possiblePermutation[indexOfFirst] == 0) {
 				return false;
 			}
 		}
@@ -377,13 +377,13 @@ public class Cryptarithm {
 	 * 
 	 * @return true - if and only if expr1 (right hand side) is equal to expr2 (left hand side) for the given solution
 	 */	
-	private boolean evaluateSingleExpression(List<String> lettersList, List<Integer> assignmentsList) {
+	private boolean evaluateSingleExpression(List<String> lettersList, Integer[] assignmentsList) {
 		int numLetters = lettersList.size();	
 		
 		//Set the variables/letters within the  expression to the numbers in the list.
 		for(int index = 0; index < numLetters; index++) {
 			String letter = lettersList.get(index);
-			Integer value = assignmentsList.get(index);
+			Integer value = assignmentsList[index];
 			mapOfUsedLetters.get(letter).store(value);
 		}
 		

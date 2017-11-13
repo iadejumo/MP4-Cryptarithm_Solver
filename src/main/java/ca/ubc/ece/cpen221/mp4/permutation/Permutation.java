@@ -14,20 +14,20 @@ import java.util.Set;
 public class Permutation<T> implements AbstractPermutation<T> {
 	// @ invariant swaps == permutationsList.size() - 1
 	
-	private final List<T> allElements; //Contains all the elements are to be arranged
-	private final List<List<T>> permutationsList; //Contains a list of all possible arrangements
-	private int swaps = 0; //Keeps track of how many swaps are made to generate permutations
+	//private final List<T> allElements; //Contains all the elements are to be arranged
+	private final List<T[]> permutationsList; //Contains a list of all possible arrangements
+	private int swaps = 0; //Keeps track of how many swaps are made to generate permutations 
 
 	/* 
 	 * Initializes Permutations class by generating a list of all possible permutations 
 	 */
-	public Permutation(Collection <T> c) {
-		allElements = new ArrayList <T>();
-		permutationsList = new ArrayList<List<T>>();
+	public Permutation(T[] a) {
+		//allElements = new ArrayList <T>();
+		permutationsList = new ArrayList<T[]>();
 		
-		if(c.size() != 0) {
-			allElements.addAll(c);	
-			generate(c.size(), allElements);
+		if(a.length != 0) {
+			//allElements.addAll(a);	
+			generate(a.length, a);
 		}
 		
 
@@ -42,10 +42,11 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	@Override
 	public T[] getOnePermutation() {
 		// TODO implement this method
-		Object[] t= new Object[(permutationsList.get(0).size())];
+		/*Object[] t= new Object[(permutationsList.get(0).size())];
 		t = permutationsList.get(0).toArray();
+		*/
 		
-		return (T[])t;
+		return permutationsList.get(0);
 	}
 	
 	/*
@@ -53,7 +54,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	 * 
 	 * @returns returns all possible permutations/arrangements of the elements
 	 */
-	public List<List<T>> getAllPermutations(){
+	public List<T[]> getAllPermutations(){
 		return Collections.unmodifiableList(permutationsList);
 	}
 	
@@ -68,10 +69,9 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	 * 				- all the elements that need to be arranged
 	 * 
 	 */
-	private void generate(int numberOfSelection, List<T> listOfOptions) {
+	private void generate(int numberOfSelection, T[] listOfOptions) {
 		if (numberOfSelection == 1) {
-			List<T> temp = new ArrayList<T> ();
-			temp.addAll(listOfOptions);
+			T[] temp = listOfOptions.clone();
 			permutationsList.add(temp);	
 			return;
 		}
@@ -100,12 +100,12 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	 * 
 	 * @param list.size() > index1 && list.size > index2
 	 */
-	private void swap (List<T> list, int index1, int index2){
-		T element1 = list.get(index1);
+	private void swap (T[] list, int index1, int index2){
+		T element1 = list[index1];
 		//T element2 = list.get(index2);
 		
-		list.set(index1,  list.get(index2));
-		list.set(index2,  element1);
+		list[index1] = list[index2];
+		list[index2] = element1;
 		swaps++;
 		
 	}
