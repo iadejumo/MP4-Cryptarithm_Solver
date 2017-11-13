@@ -1,12 +1,14 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
@@ -17,6 +19,7 @@ import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.parser.BinaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.parser.NumberExpression;
+import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
 
 /**
  * Cryptarithm - a datatype that represents a cryptarithm
@@ -247,9 +250,109 @@ public class Cryptarithm {
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
-		return null; // change this
+		List<Map<Character, Integer>> solutions = new ArrayList<Map<Character, Integer>> ();
+		List<Integer> allDigits = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+		int numLetters = mapOfUsedLetters.size();
+		
+		//Generate all permutations of the 10 digits
+		Permutation<Integer> permutation = new Permutation<Integer> (allDigits);
+		List<List<Integer>> allPermutations = permutation.getAllPermutations();
+		
+		List<String> lettersList = new ArrayList<String>();
+		lettersList.addAll(mapOfUsedLetters.keySet());
+		
+		//Get index of letter that appear first in the expressions
+		List<Integer> firstLetterIndices = new ArrayList<Integer>();
+		for (String letter: firstLetters) {
+			firstLetterIndices.add(lettersList.indexOf(letter));
+		}
+		
+		//Filter out all solution where any letter that appears first is equal to zero.
+		List<List<Integer>> nonZeroFirstPermutations = new ArrayList<List<Integer>>();
+		for (List<Integer> possiblePermutation: allPermutations) {
+			if(checkIfFirstIsZero(possiblePermutation, firstLetterIndices)) {
+				nonZeroFirstPermutations.add(possiblePermutation);
+			}
+		}
+		
+		for (List<Integer> singlePermutation: nonZeroFirstPermutations) {
+			if(evaluateSingleExpression(lettersList, singlePermutation)) {
+				Map<Character, Integer> singleSolution = new HashMap <Character, Integer>();
+				for(int index = 0; index < numLetters; index++) {
+					
+					Character letter = lettersList.get(index).charAt(0);
+					Integer value = singlePermutation.get(index);
+					singleSolution.put(letter, value);
+				}
+				
+				if (solutionDoesNotExist(singleSolution, solutions)) {
+					solutions.add(singleSolution);
+				}
+			}
+		}
+		if(solutions.size() == 0) {
+			throw new NoSolutionException();
+		}
+		
+		return solutions;	// change this
 	}
 
 	// You will need more methods
+	
+	private static boolean checkClose(double arg1, double arg2) {
+		if (Math.abs(arg1-arg2) < 0.1)
+			return true;
+		return false;
+	}
+	/*
+	public List<Map<Character, Integer>> getPossibleSolutions(){
+		
+	}
+	*/
+	private boolean checkIfFirstIsZero (List<Integer> possiblePermutation, List<Integer> firstLetterIndices) {
+		for(Integer indexOfFirst: firstLetterIndices) {
+			if(possiblePermutation.get(indexOfFirst) == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean twoDifferentSolutions (Map<Character, Integer> newSolution, Map<Character, Integer> existingSolution){
+		for(Character c: newSolution.keySet()) {
+			if (!newSolution.get(c).equals(existingSolution.get(c))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	private boolean solutionDoesNotExist (Map<Character, Integer> newSolution, List<Map<Character, Integer>> solutions){
+		for(Map<Character, Integer> existingSolution: solutions) {
+			if(!twoDifferentSolutions (newSolution, existingSolution)) {
+				return false;
+			}
+		}
+		return true;
+
+	}
+	
+	
+	private boolean evaluateSingleExpression(List<String> lettersList, List<Integer> assignmentsList) {
+		int numLetters = lettersList.size();	
+		
+		//Set the variables/letters within the  expression to the numbers in the list.
+		for(int index = 0; index < numLetters; index++) {
+			String letter = lettersList.get(index);
+			Integer value = assignmentsList.get(index);
+			mapOfUsedLetters.get(letter).store(value);
+		}
+		
+		double expression1 = exp1.eval();
+		double expression2 = exp2.eval();		
+		
+		return checkClose(expression1, expression2);
+	}
 
 }

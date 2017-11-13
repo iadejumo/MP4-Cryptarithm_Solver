@@ -36,6 +36,8 @@ public class PermutationsTest<T> {
 		Permutation p = new Permutation(allDigits);
 		permutations = p.getAllPermutations();
 		
+		//System.out.println(permutations);
+		
 		assertEquals(3628800, permutations.size());
 	}
 	@Test
@@ -46,10 +48,10 @@ public class PermutationsTest<T> {
 		Permutation p = new Permutation(digits);
 		permutations = p.getAllPermutations();
 		
-		assertEquals(23, p.swaps);
+		assertEquals(23, p.getNumberOfSwaps());
 				
 		assertEquals(24, permutations.size());
-		
+		System.out.println(permutations);
 	}
 
 }

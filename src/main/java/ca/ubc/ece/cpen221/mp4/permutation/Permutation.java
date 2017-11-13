@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,51 +12,74 @@ import java.util.Set;
 // add class overview
 
 public class Permutation<T> implements AbstractPermutation<T> {
-	List<T> allElements;  
-	List<List<T>> permutationsList;
-	public int swaps = 0;
+	private final List<T> allElements; //Contains all the elements are to be arranged
+	private final List<List<T>> permutationsList; //Contains a list of all possible arrangements
+	private int swaps = 0; //Keeps track of how many swaps are made to generate permutations
 
-
-	// you may need more here
+	/* 
+	 * Initializes Permutations class by generating a list of all possible permutations 
+	 */
 	public Permutation(Collection <T> c) {
 		allElements = new ArrayList <T>();
 		permutationsList = new ArrayList<List<T>>();
-		
+				
 		allElements.addAll(c);	
 		generate(c.size(), allElements);
 
 	}
 	
+	/*
+	 * @return a single permutation/arrangement of the elements
+	 * 
+	 * (non-Javadoc)
+	 * @see ca.ubc.ece.cpen221.mp4.permutation.AbstractPermutation#getOnePermutation()
+	 */
 	@Override
 	public T[] getOnePermutation() {
 		// TODO implement this method
-		
 		Object[] t= new Object[(permutationsList.get(0).size())];
 		t = permutationsList.get(0).toArray();
 		
 		return (T[])t;
 	}
 	
+	/*
+	 * Gets all possible permutation.
+	 * 
+	 * @returns returns all possible permutations/arrangements of the elements
+	 */
 	public List<List<T>> getAllPermutations(){
-		return permutationsList;
+		return Collections.unmodifiableList(permutationsList);
 	}
 	
+	/*
+	 * Uses Heaps Algorithm to generate all possible permutations.
+	 * 
+	 * @param numberOfSelection 
+	 * 				- the number of elements that can be switched around to generate new arrangements
+	 * @param listOfOptions
+	 * 				- all the elements that need to be arranged
+	 * 
+	 */
 	private void generate(int numberOfSelection, List<T> listOfOptions) {
-		if (numberOfSelection == 1){
-			 permutationsList.add(listOfOptions);
-			 return;
+		if (numberOfSelection == 1) {
+			List<T> temp = new ArrayList<T> ();
+			temp.addAll(listOfOptions);
+			permutationsList.add(temp);	
+			return;
 		}
 		
 		else {
 		     for(int i = 0; i < numberOfSelection - 1; i++) {
-		            generate(numberOfSelection - 1, listOfOptions);
-		            
-		            if (numberOfSelection % 2 == 0) {
-		                swap(listOfOptions, i, numberOfSelection - 1);
-		            }
-		            else {
-		            	swap(listOfOptions, 0, numberOfSelection - 1);
-		            }
+		    	 
+					generate(numberOfSelection - 1, listOfOptions);
+					
+					if (numberOfSelection % 2 == 0) {
+					    swap(listOfOptions, i, numberOfSelection - 1);
+					}
+					else {
+						swap(listOfOptions, 0, numberOfSelection - 1);
+					}
 		     }
 		     generate(numberOfSelection - 1, listOfOptions);
 		}
@@ -71,7 +95,11 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		list.set(index1,  element2);
 		list.set(index2,  element1);
 		swaps++;
+		
 	}
-
+	
+	public int getNumberOfSwaps() {
+		return swaps;
+	}
 	
 }
