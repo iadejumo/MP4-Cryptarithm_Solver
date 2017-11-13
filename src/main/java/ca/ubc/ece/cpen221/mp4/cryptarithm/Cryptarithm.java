@@ -258,6 +258,7 @@ public class Cryptarithm {
 		Permutation<Integer> permutation = new Permutation<Integer> (allDigits);
 		List<List<Integer>> allPermutations = permutation.getAllPermutations();
 		
+		//Creates a list of all the Letters used within the cryptarithm
 		List<String> lettersList = new ArrayList<String>();
 		lettersList.addAll(mapOfUsedLetters.keySet());
 		
@@ -275,26 +276,29 @@ public class Cryptarithm {
 			}
 		}
 		
+		//Checks possible possible solutions and stores the ones that yield the correct result
 		for (List<Integer> singlePermutation: nonZeroFirstPermutations) {
 			if(evaluateSingleExpression(lettersList, singlePermutation)) {
+				//Creates a map for the given solution if it is correct
 				Map<Character, Integer> singleSolution = new HashMap <Character, Integer>();
 				for(int index = 0; index < numLetters; index++) {
-					
 					Character letter = lettersList.get(index).charAt(0);
 					Integer value = singlePermutation.get(index);
 					singleSolution.put(letter, value);
 				}
 				
+				//Checks whether given solution already exists within lists of solutions
 				if (solutionDoesNotExist(singleSolution, solutions)) {
 					solutions.add(singleSolution);
 				}
 			}
 		}
+		//Throws exception if no solutions are found
 		if(solutions.size() == 0) {
 			throw new NoSolutionException();
 		}
 		
-		return solutions;	// change this
+		return solutions;
 	}
 
 	// You will need more methods
@@ -304,11 +308,17 @@ public class Cryptarithm {
 			return true;
 		return false;
 	}
+	
 	/*
-	public List<Map<Character, Integer>> getPossibleSolutions(){
-		
-	}
-	*/
+	 * Checks that for a given permutation none of the Characters that appear first in any expression is equals to zero
+	 * 
+	 * @param possiblePermutation
+	 * 				- permutation that would be checked
+	 * @param firstLetterIndices
+	 * 				-	indices of all the characters that appear first in the expressions
+	 * 
+	 * @return true - if and only if none of the Characters that appear first in any expression is equals to zero
+	 */
 	private boolean checkIfFirstIsZero (List<Integer> possiblePermutation, List<Integer> firstLetterIndices) {
 		for(Integer indexOfFirst: firstLetterIndices) {
 			if(possiblePermutation.get(indexOfFirst) == 0) {
@@ -318,6 +328,16 @@ public class Cryptarithm {
 		return true;
 	}
 	
+	/*
+	 * Checks that two solutions are different
+	 * 
+	 * @param newSolution
+	 * 				- first solution
+	 * @param existingSolution
+	 * 				- second solution
+	 * 
+	 * @return true - if and only if the solutions are different
+	 */	
 	private boolean twoDifferentSolutions (Map<Character, Integer> newSolution, Map<Character, Integer> existingSolution){
 		for(Character c: newSolution.keySet()) {
 			if (!newSolution.get(c).equals(existingSolution.get(c))) {
@@ -327,7 +347,16 @@ public class Cryptarithm {
 		return false;
 	}
 	
-	
+	/*
+	 * Checks that the list of possible solutions does not already contain a given solution
+	 * 
+	 * @param newSolution
+	 * 				- solution that has just been generated
+	 * @param solutions
+	 * 				- List of all solutions already discovered
+	 * 
+	 * @return true - if and only if the new solution is not already listed among possible solutions
+	 */	
 	private boolean solutionDoesNotExist (Map<Character, Integer> newSolution, List<Map<Character, Integer>> solutions){
 		for(Map<Character, Integer> existingSolution: solutions) {
 			if(!twoDifferentSolutions (newSolution, existingSolution)) {
@@ -338,7 +367,16 @@ public class Cryptarithm {
 
 	}
 	
-	
+	/*
+	 * Evaluates a given solution and checks that expr1 (right hand side) is equal to expr2 (left hand side)
+	 * 
+	 * @param lettersList
+	 * 				- list of all the letters used in the cryptarithm
+	 * @param assigmentsList
+	 * 				- single permutation/list of assignments
+	 * 
+	 * @return true - if and only if expr1 (right hand side) is equal to expr2 (left hand side) for the given solution
+	 */	
 	private boolean evaluateSingleExpression(List<String> lettersList, List<Integer> assignmentsList) {
 		int numLetters = lettersList.size();	
 		

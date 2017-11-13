@@ -15,17 +15,20 @@ public class PermutationsTest<T> {
 	@Test
 	public void Test1() {
 		List<String> list = new ArrayList<String>();
-		String r = "r";
-		String g = "g";
-		String b = "b";
-		list = Arrays.asList(r, g, b);
+		list = Arrays.asList("r", "g", "b");
+		
 		Permutation<String> p = new Permutation<String>(list);
-		System.out.println(p.getAllPermutations());
+		
+		List<List<String>> permutations = p.getAllPermutations();
+		
+		int count = 0;
 		for(Object s: p.getOnePermutation()) {
-			System.out.println(s + ", ");
+			count++;
 		}
+		assertEquals(3, count);
 	
 		assertEquals(6, p.getAllPermutations().size());
+		assertFalse(permutations.get(0).equals(permutations.get(1)));
 	}
 	
 	@Test
@@ -52,6 +55,15 @@ public class PermutationsTest<T> {
 				
 		assertEquals(24, permutations.size());
 		System.out.println(permutations);
+	}
+	
+	@Test
+	public void Test4() {
+		List<Integer> digits = new ArrayList<Integer>();
+		List<List<Integer>> permutations;
+		
+		Permutation p = new Permutation(digits);
+		permutations = p.getAllPermutations();
 	}
 
 }
