@@ -26,6 +26,7 @@ public class Cryptarithm {
 
 	private static final int MAX_SIZE = 10;
 	private static final int INVALID = -1;
+	private static final int MIN_SIZE = 3;
 	private static final Map<String, BinaryOperator> operators = new HashMap<String, BinaryOperator>();
 
 	private final Expression exp1; // expression on left of equals
@@ -41,20 +42,28 @@ public class Cryptarithm {
 	 * 
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
-	 *            cryptarithm
+	 *            cryptarithm, NOTE: upper case and lower case are treated as equal
+	 * @throws Illegal ArgumentException when cryptarithm parameter is invalid
+	 * 			details for invalid cryptarithm include null, having null elements
+	 * 			being shorter than 3, having more than 10 valid letters, having non-operators at odd index positions
+	 * 			having non-letters at even index positions
 	 */
 	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException {
-		// find position of equal sign, and throw exception if invalid input
-		if (!checkIfValidCryptarithmFormat(cryptarithm))
-			throw new IllegalArgumentException("Bad input!");
+		// check for null or too short cryptarithm
+		if (!checkIfNullOrShort(cryptarithm))
+			throw new IllegalArgumentException("Null or Too Short!");
 
-		int equalSignPos = findEqualsPos(cryptarithm);
+		List<String> trimmedCrypt =  removeWhiteSpaces(cryptarithm);		
+		if (!checkIfValid(trimmedCrypt))
+			throw new IllegalArgumentException("Invalid input values!");
+		
+		int equalSignPos = findEqualsPos(trimmedCrypt);
 		if (equalSignPos == INVALID)
-			throw new IllegalArgumentException("Bad input!");
+			throw new IllegalArgumentException("Equals sign missing or in wrong position!");
 
 		// initiate important variables
 		initiateOperators();
-		firstLetters = getFirstLetters(cryptarithm);
+		firstLetters = getFirstLetters(trimmedCrypt);
 		
 		mapOfUsedLetters = new HashMap<String, VariableExpression>();
 		Stack<Expression> stackOfExpressions = new Stack<Expression>();
@@ -65,18 +74,18 @@ public class Cryptarithm {
 		// Stack["-","+"]
 		for (int k = 0; k < equalSignPos; k++) {
 			if (k % 2 == 0)
-				stackOfExpressions.push(stringToExpression(cryptarithm[k], mapOfUsedLetters));
+				stackOfExpressions.push(stringToExpression(trimmedCrypt.get(k), mapOfUsedLetters));
 			else
-				stackOfOperators.push(operators.get(cryptarithm[k]));
+				stackOfOperators.push(operators.get(trimmedCrypt.get(k)));
 		}
 		exp1 = stacksToExpression(stackOfExpressions, stackOfOperators);
 
 		// repeat for the right hand side of equation
-		for (int k = equalSignPos+1; k < cryptarithm.length; k++) {
+		for (int k = equalSignPos+1; k < trimmedCrypt.size(); k++) {
 			if (k % 2 == 0)
-				stackOfExpressions.push(stringToExpression(cryptarithm[k], mapOfUsedLetters));
+				stackOfExpressions.push(stringToExpression(trimmedCrypt.get(k),mapOfUsedLetters));
 			else
-				stackOfOperators.push(operators.get(cryptarithm[k]));
+				stackOfOperators.push(operators.get(trimmedCrypt.get(k)));
 		}
 		exp2 = stacksToExpression(stackOfExpressions, stackOfOperators);
 
@@ -85,19 +94,53 @@ public class Cryptarithm {
 			throw new IllegalArgumentException("Too many letters!");
 
 	} // need to change precondition or post for wrong format parameter
-		// differentiate capitals?
 
-	// gets the first letters from the array of String 
-	private static Set<String> getFirstLetters(String[] cryptarithm){
+	
+	// reformats String[] cryptarithm to remove white spaces and capitalizes all letters
+	private static List<String> removeWhiteSpaces(String[] cryptarithm) {
+		List<String> updatedCryptarithm = new ArrayList<String>();
+
+		for (String s: cryptarithm) {
+			if (!(s.trim().contains(" ")) && !(s.trim().isEmpty()) )
+				updatedCryptarithm.add(s.trim().toUpperCase());
+		}
+		return updatedCryptarithm;
+	}
+	
+	// checks if trimmed cryptarithm is valid
+	// return false if it has non-operator strings at odd index positions
+	// return false if it has non-letter strings at even index positions
+	// otherwise returns true
+	private static boolean checkIfValid(List<String> cryptarithm) {
+		// check for non operators at odd indexes
+		for (int k = 1; k < cryptarithm.size(); k = k + 2) {
+			if (!(checkIfOperatorString(cryptarithm.get(k))))
+				return false;
+		}
+
+		// check for non letter strings at even positions
+		char[] chars;
+		for (int k = 0; k < cryptarithm.size(); k = k + 2) {
+			chars = cryptarithm.get(k).toCharArray();
+			for (char c : chars) {
+				if (!(Character.isLetter(c)))
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	// gets the first letters from the list of strings
+	private static Set<String> getFirstLetters(List<String> cryptarithm){
 		Set<String> firstLetters = new HashSet<String>();
-		for (int k=0;k<cryptarithm.length;k=k+2) {
-			firstLetters.add(cryptarithm[k].substring(0, 1));
+		for (int k=0;k<cryptarithm.size();k=k+2) {
+			firstLetters.add(cryptarithm.get(k).substring(0, 1));
 		}
 		return firstLetters;
 	}
 	
 	public static void main(String[] args) {
-		String[] c = {"SEND","+","MORE","=","MONEY"};
+		String[] c = {"SEND","+","mo"," "," ","=","MONEY"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		System.out.println("Map: "+crypt.mapOfUsedLetters);
 		System.out.println("Operators: "+operators);
@@ -181,52 +224,36 @@ public class Cryptarithm {
 				addList(listOfExpressions, index + 1));
 	}
 
-	// takes in String[] cryptarithm
+	// takes in List of Strings
 	// returns index of "=", but returns -1 if it is not there or if k is not in
 	// valid position
-	private static int findEqualsPos(String[] cryptarithm) {
+	private static int findEqualsPos(List<String> cryptarithm) {
 		// look for index of "="
 		int k;
-		for (k = 0; k < cryptarithm.length; k++) {
-			if (cryptarithm[k].equals("="))
+		for (k = 0; k < cryptarithm.size(); k++) {
+			if (cryptarithm.get(k).equals("="))
 				break;
 		}
 
 		// return k index if it is an odd number within the range
-		if (k < cryptarithm.length && k % 2 == 1)
+		if (k < cryptarithm.size() && k % 2 == 1)
 			return k;
 
 		return -1;
 	}
 
-	// returns false if cryptarithm is null or empty or has even number elements
-	// or if it has non operators at odd index positions
-	// or if it has non letter strings at even positions
+	// returns false if cryptarithm is null or too short or has null elements
 	// otherwise returns true
-	private static boolean checkIfValidCryptarithmFormat(String[] cryptarithm) {
+	private static boolean checkIfNullOrShort(String[] cryptarithm) {
 		// check for null or empty or invalid length
-		if (cryptarithm == null || cryptarithm.length == 0 || cryptarithm.length % 2 == 0)
+		if (cryptarithm == null || cryptarithm.length < MIN_SIZE)
 			return false;
 
 		for (String s : cryptarithm) {
 			if (s == null)
 				return false;
 		}
-		// check for non operators at odd indexes
-		for (int k = 1; k < cryptarithm.length; k = k + 2) {
-			if (!(checkIfOperatorString(cryptarithm[k])))
-				return false;
-		}
-
-		// check for non letter strings at even positions
-		char[] chars;
-		for (int k = 0; k < cryptarithm.length; k = k + 2) {
-			chars = cryptarithm[k].toCharArray();
-			for (char c : chars) {
-				if (!(Character.isLetter(c)))
-					return false;
-			}
-		}
+		
 		return true;
 	}
 

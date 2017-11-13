@@ -101,7 +101,7 @@ public class SimpleCalculatorTest {
 		assertTrue(times.toString().equals("*"));
 		assertTrue(divide.toString().equals("/"));
 		assertTrue(exp.toString().equals("^"));
-		assertTrue(neg.toString().equals("neg"));
+		assertTrue(neg.toString().equals("~"));
 		assertTrue(abs.toString().equals("abs"));
 		assertTrue(sin.toString().equals("sin"));
 		assertTrue(cos.toString().equals("cos"));
@@ -137,11 +137,11 @@ public class SimpleCalculatorTest {
 		assertTrue(e4.toString().equals("(10.0 / 2.0)"));
 		assertTrue(e5.toString().equals("(10.0 ^ 2.0)"));
 		
-		assertTrue(e6.toString().equals("neg(10.0)"));
+		assertTrue(e6.toString().equals("~(10.0)"));
 		assertTrue(e7.toString().equals("abs(10.0)"));
 		assertTrue(e8.toString().equals("sin(10.0)"));
 		assertTrue(e9.toString().equals("cos(10.0)"));
-		assertTrue(e10.toString().equals("abs(neg(10.0))"));
+		assertTrue(e10.toString().equals("abs(~(10.0))"));
 		
 		Expression f1 = new BinaryOperatorExpression(new MultiplicationOperator(),e1,xSquared);
 		Expression f2 = new BinaryOperatorExpression(new DivisionOperator(),e10,xSquared);
@@ -153,35 +153,16 @@ public class SimpleCalculatorTest {
 		Expression f7 = new DerivativeExpression(f3,x);
 		Expression f8 = new DerivativeExpression(f4,x);
 		
-		System.out.println(f4.toString());
-		System.out.println(f4.eval());
-		System.out.println(f8.toString());
-		System.out.println(f8.eval());
-		
 		assertTrue(f1.toString().equals("((10.0 + 2.0) * (x ^ 2.0))") && checkClose(f1.eval(), 1200));
-		assertTrue(f2.toString().equals("(abs(neg(10.0)) / (x ^ 2.0))") && checkClose(f2.eval(),0.1));
-		assertTrue(f3.toString().equals("(((10.0 + 2.0) * (x ^ 2.0)) - (abs(neg(10.0)) / (x ^ 2.0)))") && checkClose(f3.eval(),1199.9));
+		assertTrue(f2.toString().equals("(abs(~(10.0)) / (x ^ 2.0))") && checkClose(f2.eval(),0.1));
+		assertTrue(f3.toString().equals("(((10.0 + 2.0) * (x ^ 2.0)) - (abs(~(10.0)) / (x ^ 2.0)))") && checkClose(f3.eval(),1199.9));
 		assertTrue(f4.toString().equals("((10.0 ^ 2.0) ^ (10.0 / 2.0))") && checkClose(f4.eval(),10000000000.0));
 		
 		assertTrue(f5.toString().equals("(d/dx)(((10.0 + 2.0) * (x ^ 2.0)))") && checkClose(f5.eval(),240));
-		assertTrue(f6.toString().equals("(d/dx)((abs(neg(10.0)) / (x ^ 2.0)))") && checkClose(f6.eval(),-0.02));
-		assertTrue(f7.toString().equals("(d/dx)((((10.0 + 2.0) * (x ^ 2.0)) - (abs(neg(10.0)) / (x ^ 2.0))))") && checkClose(f7.eval(),240));
+		assertTrue(f6.toString().equals("(d/dx)((abs(~(10.0)) / (x ^ 2.0)))") && checkClose(f6.eval(),-0.02));
+		assertTrue(f7.toString().equals("(d/dx)((((10.0 + 2.0) * (x ^ 2.0)) - (abs(~(10.0)) / (x ^ 2.0))))") && checkClose(f7.eval(),240));
 		assertTrue(f8.toString().equals("(d/dx)(((10.0 ^ 2.0) ^ (10.0 / 2.0)))") && checkClose(f8.eval(),0));
 		
-	}
-	
-	private static Map<String,Operator> getOperators(){
-		Map<String,Operator> operators = new HashMap<String,Operator>();
-		operators.put("abs",new AbsoluteValueOperator());
-		operators.put("+",new AdditionOperator());
-		operators.put("cos",new CoseOperator());
-		operators.put("/",new DivisionOperator());
-		operators.put("^",new ExponentiationOperator());
-		operators.put("*",new MultiplicationOperator());
-		operators.put("-",new NegationOperator());
-		operators.put("sin",new SineOperator());
-		operators.put("-",new SubtractionOperator());
-		return operators;
 	}
 	
 	@Test
