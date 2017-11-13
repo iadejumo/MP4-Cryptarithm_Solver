@@ -1,12 +1,8 @@
 package ca.ubc.ece.cpen221.mp4.permutation;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 // add class overview
 
@@ -28,9 +24,6 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	
 	@Override
 	public T[] getOnePermutation() {
-		// yo Satish said you can remove this TODO after you're done
-		// TODO implement this method
-		
 		Object[] t= new Object[(permutationsList.get(0).size())];
 		t = permutationsList.get(0).toArray();
 		

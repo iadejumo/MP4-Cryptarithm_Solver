@@ -38,26 +38,31 @@ public class Cryptarithm {
 
 	private final List<String> cryptarithm;
 	private final Set<String> firstLetters;
+
 	/**
-	 * Cryptarithm constructor
+	 * Cryptarithm constructor - takes an array of Strings and converts it into a
+	 * cryptarithm
 	 * 
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
-	 *            cryptarithm, NOTE: upper case and lower case are treated as equal
-	 * @throws Illegal ArgumentException when cryptarithm parameter is invalid
-	 * 			details for invalid cryptarithm include null, having null elements
-	 * 			being shorter than 3, having more than 10 valid letters, having non-operators at odd index positions
-	 * 			having non-letters at even index positions
+	 *            cryptarithm, NOTE: upper case and lower case input will be treated
+	 *            as equal
+	 * @throws Illegal
+	 *             ArgumentException when cryptarithm parameter is invalid invalid
+	 *             cryptarithm include being null, having null elements being
+	 *             shorter than 3 elements, having more than 10 valid letters,
+	 *             having non-operators at odd index positions having non-letters at
+	 *             even index positions
 	 */
 	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException {
 		// check for null or too short cryptarithm
 		if (!checkIfNullOrShort(cryptarithm))
 			throw new IllegalArgumentException("Null or Too Short!");
 
-		this.cryptarithm =  removeWhiteSpaces(cryptarithm);		
+		this.cryptarithm = removeWhiteSpaces(cryptarithm);
 		if (!checkIfValid(this.cryptarithm))
 			throw new IllegalArgumentException("Invalid input values!");
-		
+
 		int equalSignPos = findEqualsPos(this.cryptarithm);
 		if (equalSignPos == INVALID)
 			throw new IllegalArgumentException("Equals sign missing or in wrong position!");
@@ -65,7 +70,7 @@ public class Cryptarithm {
 		// initiate important variables
 		initiateOperators();
 		firstLetters = getFirstLetters(this.cryptarithm);
-		
+
 		mapOfUsedLetters = new HashMap<String, VariableExpression>();
 		Stack<Expression> stackOfExpressions = new Stack<Expression>();
 		Stack<BinaryOperator> stackOfOperators = new Stack<BinaryOperator>();
@@ -82,9 +87,9 @@ public class Cryptarithm {
 		exp1 = stacksToExpression(stackOfExpressions, stackOfOperators);
 
 		// repeat for the right hand side of equation
-		for (int k = equalSignPos+1; k < this.cryptarithm.size(); k++) {
+		for (int k = equalSignPos + 1; k < this.cryptarithm.size(); k++) {
 			if (k % 2 == 0)
-				stackOfExpressions.push(stringToExpression(this.cryptarithm.get(k),mapOfUsedLetters));
+				stackOfExpressions.push(stringToExpression(this.cryptarithm.get(k), mapOfUsedLetters));
 			else
 				stackOfOperators.push(operators.get(this.cryptarithm.get(k)));
 		}
@@ -94,20 +99,20 @@ public class Cryptarithm {
 		if (mapOfUsedLetters.size() > MAX_SIZE)
 			throw new IllegalArgumentException("Too many letters!");
 
-	} // need to change precondition or post for wrong format parameter
+	}
 
-	
-	// reformats String[] cryptarithm to remove white spaces and capitalizes all letters
+	// reformats String[] cryptarithm to remove white spaces and capitalizes all
+	// letters
 	private static List<String> removeWhiteSpaces(String[] cryptarithm) {
 		List<String> updatedCryptarithm = new ArrayList<String>();
 
-		for (String s: cryptarithm) {
-			if (!(s.trim().contains(" ")) && !(s.trim().isEmpty()) )
+		for (String s : cryptarithm) {
+			if (!(s.trim().contains(" ")) && !(s.trim().isEmpty()))
 				updatedCryptarithm.add(s.trim().toUpperCase());
 		}
 		return updatedCryptarithm;
 	}
-	
+
 	// checks if trimmed cryptarithm is valid
 	// return false if it has non-operator strings at odd index positions
 	// return false if it has non-letter strings at even index positions
@@ -130,34 +135,16 @@ public class Cryptarithm {
 		}
 		return true;
 	}
-	
+
 	// gets the first letters from the list of strings
-	private static Set<String> getFirstLetters(List<String> cryptarithm){
+	private static Set<String> getFirstLetters(List<String> cryptarithm) {
 		Set<String> firstLetters = new HashSet<String>();
-		for (int k=0;k<cryptarithm.size();k=k+2) {
+		for (int k = 0; k < cryptarithm.size(); k = k + 2) {
 			firstLetters.add(cryptarithm.get(k).substring(0, 1));
 		}
 		return firstLetters;
 	}
-	
-	public static void main(String[] args) {
-		String[] c = {"SEND","+","MORE","=","MONEY"};
-		Cryptarithm crypt = new Cryptarithm(c);
-		System.out.println("Map: "+crypt.mapOfUsedLetters);
-		System.out.println("Operators: "+operators);
-		for (String s:crypt.mapOfUsedLetters.keySet()) {
-			crypt.mapOfUsedLetters.get(s).store(1);
-		}
-		crypt.mapOfUsedLetters.get("M").store(4);
-		crypt.mapOfUsedLetters.get("O").store(7);
-		System.out.println("Exp 1 = " + crypt.exp1.eval());
-		System.out.println("Exp 2 = " + crypt.exp2.eval());
-		System.out.println("Map: "+crypt.mapOfUsedLetters);
-		System.out.println("Operators: "+operators);
-		System.out.println("First Letters: "+crypt.firstLetters);
-		System.out.println(crypt);
-	}
-	
+
 	// initiate the Map to be able to use binary operators
 	private static void initiateOperators() {
 		operators.put("+", new AdditionOperator());
@@ -255,7 +242,7 @@ public class Cryptarithm {
 			if (s == null)
 				return false;
 		}
-		
+
 		return true;
 	}
 
@@ -279,14 +266,37 @@ public class Cryptarithm {
 		return null; // change this
 	}
 
-	// You will need more methods
-	
 	@Override
+	/**
+	 * Changes the cryptarithm's toString value to show what the cryptarithm
+	 * expressions are
+	 * 
+	 * @return a String that shows the cryptarithm's words and operators that make
+	 *         it up
+	 */
 	public String toString() {
 		String name = "";
-		for (String s: cryptarithm)
+		for (String s : cryptarithm)
 			name = name + s + " ";
-		return name;
+		return name.substring(0, name.length() - 1);
 	}
 
+	// TODO: REMOVE THIS LATER
+	public static void main(String[] args) {
+		String[] c = { "SEND", "+", "MORE", "=", "MONEY" };
+		Cryptarithm crypt = new Cryptarithm(c);
+		System.out.println("Map: " + crypt.mapOfUsedLetters);
+		System.out.println("Operators: " + operators);
+		for (String s : crypt.mapOfUsedLetters.keySet()) {
+			crypt.mapOfUsedLetters.get(s).store(1);
+		}
+		crypt.mapOfUsedLetters.get("M").store(4);
+		crypt.mapOfUsedLetters.get("O").store(7);
+		System.out.println("Exp 1 = " + crypt.exp1.eval());
+		System.out.println("Exp 2 = " + crypt.exp2.eval());
+		System.out.println("Map: " + crypt.mapOfUsedLetters);
+		System.out.println("Operators: " + operators);
+		System.out.println("First Letters: " + crypt.firstLetters);
+		System.out.println(crypt);
+	}
 }

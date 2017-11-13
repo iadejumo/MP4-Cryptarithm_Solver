@@ -284,7 +284,7 @@ public final class ExpressionParser {
 	 *            the symbol
 	 * @return the int
 	 */
-	int countSymbol(String text, char symbol) {
+	public int countSymbol(String text, char symbol) {
 		int count = 0;
 		for (int index = 0; index < text.length(); index++) {
 			if (text.charAt(index) == symbol) {

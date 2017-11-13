@@ -5,9 +5,9 @@ import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 
 public class BinaryOperatorExpression implements Expression {
 
-	BinaryOperator operator;
-	Expression operand1;
-	Expression operand2;
+	private final BinaryOperator operator;
+	private final Expression operand1;
+	private final Expression operand2;
 
 	public BinaryOperatorExpression(BinaryOperator operator, Expression operand1, Expression operand2) {
 		this.operator = operator;

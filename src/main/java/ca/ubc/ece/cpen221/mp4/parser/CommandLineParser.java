@@ -3,23 +3,12 @@
  */
 package ca.ubc.ece.cpen221.mp4.parser;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.gui.AbsoluteValueOperator;
-import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.CoseOperator;
-import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.ExponentiationOperator;
 import ca.ubc.ece.cpen221.mp4.gui.ListOfSupportedOperators;
-import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
-import ca.ubc.ece.cpen221.mp4.gui.NegationOperator;
-import ca.ubc.ece.cpen221.mp4.gui.SineOperator;
-import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 /**
@@ -50,6 +39,7 @@ public class CommandLineParser {
 				System.out.println("Result: " + exp.eval());
 			} catch (Exception e) {
 				System.out.println("Input format not accepted. Please try again.");
+				scanner.close();
 			}
 		} while (true);
 

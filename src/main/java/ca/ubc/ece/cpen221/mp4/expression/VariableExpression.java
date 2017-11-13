@@ -18,8 +18,7 @@ public class VariableExpression implements Expression {
 	private double value;
 
 	/**
-	 * Constructs a variable with the specified name, whose initial value is
-	 * zero.
+	 * Constructs a variable with the specified name, whose initial value is zero.
 	 * 
 	 * @param name
 	 *            the name of the variable
