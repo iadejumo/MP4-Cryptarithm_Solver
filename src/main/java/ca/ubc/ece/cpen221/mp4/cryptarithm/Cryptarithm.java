@@ -304,7 +304,7 @@ public class Cryptarithm {
 	// You will need more methods
 	
 	private static boolean checkClose(double arg1, double arg2) {
-		if (Math.abs(arg1-arg2) < 0.1)
+		if (Math.abs(arg1-arg2) < 0.0000001)
 			return true;
 		return false;
 	}

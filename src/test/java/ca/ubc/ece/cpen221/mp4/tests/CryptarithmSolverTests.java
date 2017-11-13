@@ -34,7 +34,7 @@ public class CryptarithmSolverTests {
 		assertEquals(1, solutions.size());
 		System.out.println(solutions);
 	}
-	/*
+	
 	@Test
 	public void Test3() throws NoSolutionException {
 		String[] c = {"NORTH","/","SOUTH","=","EAST","/","WEST"};
@@ -42,10 +42,11 @@ public class CryptarithmSolverTests {
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
 		
-		assertEquals(1, solutions.size());
 		System.out.println(solutions);
+		assertEquals(1, solutions.size());
+		
 	}
-	*/
+	
 	@Test
 	public void Test4() throws NoSolutionException {
 		String[] c = {"JEDER","+","LIEBT","=","BERLIN"};
