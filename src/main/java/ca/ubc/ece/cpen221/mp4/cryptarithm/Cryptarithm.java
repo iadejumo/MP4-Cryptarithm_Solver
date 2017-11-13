@@ -36,6 +36,7 @@ public class Cryptarithm {
 	// RI: size is less than 11, no repeated variable names
 	private final Map<String, VariableExpression> mapOfUsedLetters;
 
+	private final List<String> cryptarithm;
 	private final Set<String> firstLetters;
 	/**
 	 * Cryptarithm constructor
@@ -53,17 +54,17 @@ public class Cryptarithm {
 		if (!checkIfNullOrShort(cryptarithm))
 			throw new IllegalArgumentException("Null or Too Short!");
 
-		List<String> trimmedCrypt =  removeWhiteSpaces(cryptarithm);		
-		if (!checkIfValid(trimmedCrypt))
+		this.cryptarithm =  removeWhiteSpaces(cryptarithm);		
+		if (!checkIfValid(this.cryptarithm))
 			throw new IllegalArgumentException("Invalid input values!");
 		
-		int equalSignPos = findEqualsPos(trimmedCrypt);
+		int equalSignPos = findEqualsPos(this.cryptarithm);
 		if (equalSignPos == INVALID)
 			throw new IllegalArgumentException("Equals sign missing or in wrong position!");
 
 		// initiate important variables
 		initiateOperators();
-		firstLetters = getFirstLetters(trimmedCrypt);
+		firstLetters = getFirstLetters(this.cryptarithm);
 		
 		mapOfUsedLetters = new HashMap<String, VariableExpression>();
 		Stack<Expression> stackOfExpressions = new Stack<Expression>();
@@ -74,18 +75,18 @@ public class Cryptarithm {
 		// Stack["-","+"]
 		for (int k = 0; k < equalSignPos; k++) {
 			if (k % 2 == 0)
-				stackOfExpressions.push(stringToExpression(trimmedCrypt.get(k), mapOfUsedLetters));
+				stackOfExpressions.push(stringToExpression(this.cryptarithm.get(k), mapOfUsedLetters));
 			else
-				stackOfOperators.push(operators.get(trimmedCrypt.get(k)));
+				stackOfOperators.push(operators.get(this.cryptarithm.get(k)));
 		}
 		exp1 = stacksToExpression(stackOfExpressions, stackOfOperators);
 
 		// repeat for the right hand side of equation
-		for (int k = equalSignPos+1; k < trimmedCrypt.size(); k++) {
+		for (int k = equalSignPos+1; k < this.cryptarithm.size(); k++) {
 			if (k % 2 == 0)
-				stackOfExpressions.push(stringToExpression(trimmedCrypt.get(k),mapOfUsedLetters));
+				stackOfExpressions.push(stringToExpression(this.cryptarithm.get(k),mapOfUsedLetters));
 			else
-				stackOfOperators.push(operators.get(trimmedCrypt.get(k)));
+				stackOfOperators.push(operators.get(this.cryptarithm.get(k)));
 		}
 		exp2 = stacksToExpression(stackOfExpressions, stackOfOperators);
 
@@ -140,7 +141,7 @@ public class Cryptarithm {
 	}
 	
 	public static void main(String[] args) {
-		String[] c = {"SEND","+","mo"," "," ","=","MONEY"};
+		String[] c = {"SEND","+","MORE","=","MONEY"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		System.out.println("Map: "+crypt.mapOfUsedLetters);
 		System.out.println("Operators: "+operators);
@@ -154,6 +155,7 @@ public class Cryptarithm {
 		System.out.println("Map: "+crypt.mapOfUsedLetters);
 		System.out.println("Operators: "+operators);
 		System.out.println("First Letters: "+crypt.firstLetters);
+		System.out.println(crypt);
 	}
 	
 	// initiate the Map to be able to use binary operators
@@ -278,5 +280,13 @@ public class Cryptarithm {
 	}
 
 	// You will need more methods
+	
+	@Override
+	public String toString() {
+		String name = "";
+		for (String s: cryptarithm)
+			name = name + s + " ";
+		return name;
+	}
 
 }

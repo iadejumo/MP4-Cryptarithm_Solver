@@ -24,7 +24,6 @@ public class CryptarithmRepresentationTest {
 		Cryptarithm crypt = new Cryptarithm(c);
 	}
 	
-	
 	@Test (expected = IllegalArgumentException.class)
 	public void nullInputTest() {
 		String[] c = null;
@@ -49,7 +48,40 @@ public class CryptarithmRepresentationTest {
 		Cryptarithm crypt = new Cryptarithm(c);
 	}
 	
+	@Test (expected = IllegalArgumentException.class)
+	public void hasInvalidStringTypesTest() {
+		String[] c = {"SEND",",","+","QREWRIOPVSANDKNDZXNDFMNDSKLGJ","=","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
 	
+	@Test (expected = IllegalArgumentException.class)
+	public void tooShortInputTest() {
+		String[] c = {"SEND","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
 	
+	@Test 
+	public void whiteSpacesInStringTest() {
+		String[] c = {"SEND","+"," MORE","=","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
+	
+	@Test 
+	public void lowercasesStringTest() {
+		String[] c = {"SEND","+","moRe","=","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
+	
+	@Test 
+	public void whiteSpacesBetweenStringTest() {
+		String[] c = {"SEND","+"," "," More","="," ","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
+	
+	@Test 
+	public void emptyStringsBetweenStringTest() {
+		String[] c = {"SEND","","+",""," More","="," ","MONEY"};
+		Cryptarithm crypt = new Cryptarithm(c);
+	}
 	
 }
