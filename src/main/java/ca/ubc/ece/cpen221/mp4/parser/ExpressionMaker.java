@@ -24,7 +24,7 @@ public class ExpressionMaker {
 	 */
 	public Expression createBinaryOperationExpression(BinaryOperator operator, Expression operand1,
 			Expression operand2) {
-		return new BinaryOperatorExpression(operator,operand1,operand2);
+		return new BinaryOperatorExpression(operator, operand1, operand2);
 	}
 
 	/**

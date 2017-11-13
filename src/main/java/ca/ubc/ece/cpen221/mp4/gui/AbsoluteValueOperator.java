@@ -13,7 +13,7 @@ public class AbsoluteValueOperator implements UnaryOperator {
 	
 	@Override
 	public String toString() {
-		return ("|x|");
+		return ("abs");
 	}
 
 }

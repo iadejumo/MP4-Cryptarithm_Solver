@@ -7,19 +7,19 @@ public class UnaryOperatorExpression implements Expression {
 
 	UnaryOperator operator;
 	Expression operand;
-	
+
 	public UnaryOperatorExpression(UnaryOperator operator, Expression operand) {
 		this.operator = operator;
 		this.operand = operand;
 	}
-	
+
 	@Override
 	public double eval() {
 		return operator.apply(operand.eval());
 	}
-	
+
 	public String toString() {
-		return operator.toString() + " " + operand.toString();
+		return operator.toString() + "(" + operand.toString() + ")";
 	}
 
 }

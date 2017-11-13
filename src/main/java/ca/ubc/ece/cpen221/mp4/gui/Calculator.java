@@ -42,12 +42,15 @@ public class Calculator extends JPanel {
 	 *            a list of operators to be added to the calculator
 	 */
 	public Calculator(List<Operator> supportedOperatorList) {
+		
 		this.supportedOperatorList = new ArrayList<Operator>();
 		
-		for (Operator op: supportedOperatorList) {
-			this.supportedOperatorList.add(op);
-		} // avoided aliasing!
-		//may need to check for null or empty lists here or later
+		if (supportedOperatorList != null) {
+			for (Operator op: supportedOperatorList) {
+				this.supportedOperatorList.add(op);
+			} 
+		}
+		
 	}
 
 	/**

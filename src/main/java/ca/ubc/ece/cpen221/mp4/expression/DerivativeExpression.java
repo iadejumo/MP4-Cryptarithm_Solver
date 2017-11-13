@@ -34,5 +34,10 @@ public class DerivativeExpression implements Expression {
 		return ( (fnWithDelta - fnWithoutDelta)/DELTA_X);
 	}
 	
+	@Override
+	public String toString() {
+		return "(d/d"+independentVar.name()+")("+fn.toString()+")";
+	}
+	
 
 }

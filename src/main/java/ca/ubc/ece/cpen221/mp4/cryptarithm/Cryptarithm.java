@@ -113,7 +113,7 @@ public class Cryptarithm {
 		System.out.println("First Letters: "+crypt.firstLetters);
 	}
 	
-	// initate the Map to be able to use binary operators
+	// initiate the Map to be able to use binary operators
 	private static void initiateOperators() {
 		operators.put("+", new AdditionOperator());
 		operators.put("-", new SubtractionOperator());

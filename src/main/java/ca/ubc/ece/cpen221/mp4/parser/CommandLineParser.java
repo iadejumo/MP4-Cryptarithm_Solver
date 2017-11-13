@@ -15,6 +15,7 @@ import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
 import ca.ubc.ece.cpen221.mp4.gui.CoseOperator;
 import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
 import ca.ubc.ece.cpen221.mp4.gui.ExponentiationOperator;
+import ca.ubc.ece.cpen221.mp4.gui.ListOfSupportedOperators;
 import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
 import ca.ubc.ece.cpen221.mp4.gui.NegationOperator;
 import ca.ubc.ece.cpen221.mp4.gui.SineOperator;
@@ -36,7 +37,7 @@ public class CommandLineParser {
 	 */
 	public static void main(String[] args) {
 
-		Set<Operator> operatorSet = getSetOfAllOperators();
+		Set<Operator> operatorSet = new HashSet<Operator>(ListOfSupportedOperators.getList());
 
 		ExpressionParser parser = new ExpressionParser(operatorSet, new ExpressionMaker());
 
@@ -52,22 +53,6 @@ public class CommandLineParser {
 			}
 		} while (true);
 
-	}
-	
-	private static Set<Operator> getSetOfAllOperators(){
-		Set<Operator> operators = new HashSet<Operator>();	
-		
-		// add each operator to list
-		operators.add(new AdditionOperator());
-		operators.add(new SubtractionOperator());
-		operators.add(new MultiplicationOperator());
-		operators.add(new DivisionOperator());
-		operators.add(new ExponentiationOperator());
-		operators.add(new NegationOperator());
-		operators.add(new AbsoluteValueOperator());
-		operators.add(new SineOperator());
-		operators.add(new CoseOperator());
-		return operators;
 	}
 
 }

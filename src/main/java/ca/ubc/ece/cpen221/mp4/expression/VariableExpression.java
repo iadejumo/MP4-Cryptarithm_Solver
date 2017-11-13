@@ -36,7 +36,7 @@ public class VariableExpression implements Expression {
 
 	@Override
 	public String toString() {
-		return name + " = "+value;
+		return name;
 	}
 
 	/**

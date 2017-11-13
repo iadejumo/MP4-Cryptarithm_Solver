@@ -10,7 +10,7 @@ public class CoseOperator implements UnaryOperator {
 	}
 	
 	public String toString() {
-		return "cos";
+		return ("cos");
 	}
 
 }
