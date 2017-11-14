@@ -17,9 +17,16 @@ public class SolveCryptarithm {
 
 	static public void main(String[] args) throws NoSolutionException {
 		// TODO implement this main method
-		Cryptarithm c = new Cryptarithm(args);
+		String[] args1 = {"SEND", "+", "MORE", "=", "MONEY"};
 		
-		System.out.print(c.solve());
+		Cryptarithm c = new Cryptarithm(args1);
+		List<Map<Character,Integer>> solutions = c.solve();
+		int numSolutions = solutions.size();
+		
+		System.out.println(numSolutions + " solution(s):");
+		for (Map<Character,Integer> map: solutions) {
+			System.out.println(map);
+		}
 		
 	}
 	
