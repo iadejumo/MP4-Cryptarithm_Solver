@@ -28,6 +28,7 @@ public class Cryptarithm {
 	private static final int MAX_SIZE = 10;
 	private static final int INVALID = -1;
 	private static final int MIN_SIZE = 3;
+	private static final double PRECISION = 0.0000001;
 	private static final Map<String, BinaryOperator> operators = new HashMap<String, BinaryOperator>();
 
 	private final Expression exp1; // expression on left of equals
@@ -317,7 +318,7 @@ public class Cryptarithm {
 	}
 	
 	private static boolean checkClose(double arg1, double arg2) {
-		if (Math.abs(arg1-arg2) < 0.0000001)
+		if (Math.abs(arg1-arg2) < PRECISION)
 			return true;
 		return false;
 	}
