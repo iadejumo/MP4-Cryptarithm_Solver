@@ -1,13 +1,10 @@
 package ca.ubc.ece.cpen221.mp4.permutation;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 // add class overview
 
@@ -42,9 +39,6 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	@Override
 	public T[] getOnePermutation() {
 		// TODO implement this method
-		/*Object[] t= new Object[(permutationsList.get(0).size())];
-		t = permutationsList.get(0).toArray();
-		*/
 		
 		return permutationsList.get(0);
 	}
@@ -102,7 +96,6 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	 */
 	private void swap (T[] list, int index1, int index2){
 		T element1 = list[index1];
-		//T element2 = list.get(index2);
 		
 		list[index1] = list[index2];
 		list[index2] = element1;

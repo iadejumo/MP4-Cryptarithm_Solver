@@ -13,14 +13,14 @@ import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 /**
  * ExpressionParser - parses String expressions and returns an Expression.
  * 
- *         Constraints: Supports custom configured operator precedence. Trying
- *         to trick the parser will work, it is tokenizing on white space.
+ * Constraints: Supports custom configured operator precedence. Trying to trick
+ * the parser will work, it is tokenizing on white space.
  * 
- *         Expected Input: All inputs should have a single space between each
- *         'token'. A token is defined as either a number or an operator symbol.
- *         Parenthesis may be connected to a number token
- *         
- *         
+ * Expected Input: All inputs should have a single space between each 'token'. A
+ * token is defined as either a number or an operator symbol. Parenthesis may be
+ * connected to a number token
+ * 
+ * 
  * Note: YOU SHOULD NOT NEED TO MODIFY THIS CLASS.
  */
 public final class ExpressionParser {
@@ -176,12 +176,12 @@ public final class ExpressionParser {
 		return convert(treeHelper.getTree());
 	}
 
-	//CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 	/**
 	 * Evaluate token.
 	 * 
-	 * Mostly a convenience function, possibly used for multi-parsing complex
-	 * tokens (not currently supported)
+	 * Mostly a convenience function, possibly used for multi-parsing complex tokens
+	 * (not currently supported)
 	 *
 	 * @param base
 	 *            the base
@@ -192,7 +192,7 @@ public final class ExpressionParser {
 	 * @return the tree helper
 	 */
 	private TreeHelper evaluateToken(TreeHelper base, String token, Scanner scanner) {
-		
+
 		double value;
 		Operator operator;
 		if (token.charAt(0) == '(') {
@@ -220,12 +220,10 @@ public final class ExpressionParser {
 		} else {
 			throw new IllegalArgumentException("Invalid Expression");
 		}
-	
 
 		return base;
 	}
-	//CHECKSTYLE:ON
-	
+	// CHECKSTYLE:ON
 
 	/**
 	 * Parses the sub expression.
@@ -286,7 +284,7 @@ public final class ExpressionParser {
 	 *            the symbol
 	 * @return the int
 	 */
-	int countSymbol(String text, char symbol) {
+	public int countSymbol(String text, char symbol) {
 		int count = 0;
 		for (int index = 0; index < text.length(); index++) {
 			if (text.charAt(index) == symbol) {
@@ -313,9 +311,9 @@ public final class ExpressionParser {
 	}
 
 	/**
-	 * Try parse operator. Returns null if the parameter is not an operator.
-	 * Will also match if the parameter starts with an operator (this is needed
-	 * for fuzzy matching complex tokens in unary operators)
+	 * Try parse operator. Returns null if the parameter is not an operator. Will
+	 * also match if the parameter starts with an operator (this is needed for fuzzy
+	 * matching complex tokens in unary operators)
 	 *
 	 * @param possibleOperator
 	 *            the possible operator

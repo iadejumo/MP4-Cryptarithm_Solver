@@ -10,7 +10,7 @@ import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 
 /**
  * 
- * Validator - validates the String expression given before it is parsed. 
+ * Validator - validates the String expression given before it is parsed.
  * 
  * Note: YOU SHOULD NOT NEED TO MODIFY THIS CLASS.
  */
