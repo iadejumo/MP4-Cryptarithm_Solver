@@ -17,9 +17,9 @@ public class SolveCryptarithm {
 
 	static public void main(String[] args) throws NoSolutionException {
 		// TODO implement this main method
-		String[] args1 = {"SEND", "+", "MORE", "=", "MONEY"};
+		//String[] args1 = {"SEND", "+", "MORE", "=", "MONEY"};
 		
-		Cryptarithm c = new Cryptarithm(args1);
+		Cryptarithm c = new Cryptarithm(args);
 		List<Map<Character,Integer>> solutions = c.solve();
 		int numSolutions = solutions.size();
 		
