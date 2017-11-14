@@ -265,7 +265,6 @@ public class Cryptarithm {
 	 *         cryptarithm.
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
-		// TODO implement this method
 		List<Map<Character, Integer>> solutions = new ArrayList<Map<Character, Integer>> ();
 		Integer[] allDigits = {0,1,2,3,4,5,6,7,8,9};
 		int numLetters = mapOfUsedLetters.size();
@@ -422,22 +421,4 @@ public class Cryptarithm {
 		return name.substring(0, name.length() - 1);
 	}
 
-	// TODO: REMOVE THIS LATER
-	public static void main(String[] args) {
-		String[] c = { "SEND", "+", "MORE", "=", "MONEY" };
-		Cryptarithm crypt = new Cryptarithm(c);
-		System.out.println("Map: " + crypt.mapOfUsedLetters);
-		System.out.println("Operators: " + operators);
-		for (String s : crypt.mapOfUsedLetters.keySet()) {
-			crypt.mapOfUsedLetters.get(s).store(1);
-		}
-		crypt.mapOfUsedLetters.get("M").store(4);
-		crypt.mapOfUsedLetters.get("O").store(7);
-		System.out.println("Exp 1 = " + crypt.exp1.eval());
-		System.out.println("Exp 2 = " + crypt.exp2.eval());
-		System.out.println("Map: " + crypt.mapOfUsedLetters);
-		System.out.println("Operators: " + operators);
-		System.out.println("First Letters: " + crypt.firstLetters);
-		System.out.println(crypt);
-	}
 }

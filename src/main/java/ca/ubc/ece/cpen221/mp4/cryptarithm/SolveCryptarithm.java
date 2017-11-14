@@ -8,8 +8,6 @@ import ca.ubc.ece.cpen221.mp4.cryptarithm.NoSolutionException;
 public class SolveCryptarithm {
 
 	static public void main(String[] args) throws NoSolutionException {
-		// TODO implement this main method
-		//String[] args1 = {"SEND", "+", "MORE", "=", "MONEY"};
 		
 		Cryptarithm c = new Cryptarithm(args);
 		List<Map<Character,Integer>> solutions = c.solve();
