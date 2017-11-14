@@ -30,6 +30,14 @@ public class CryptarithmRepresentationTest {
 		assertFalse(crypt.toString().equals("SEND + MORE = MONEY"));
 		fail();
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void nullInsideInputTest() {
+		String[] c = {null,null,null,null};
+		Cryptarithm crypt = new Cryptarithm(c);
+		assertFalse(crypt.toString().equals("SEND + MORE = MONEY"));
+		fail();
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void emptyInputTest() {
