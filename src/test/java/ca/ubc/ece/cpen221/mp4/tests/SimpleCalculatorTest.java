@@ -169,6 +169,9 @@ public class SimpleCalculatorTest {
 
 		x.store(3.1 / 2);
 
+		NewtonsMethod n = new NewtonsMethod();
+		NewtonsMethod m = new NewtonsMethod();
+		assertTrue(!n.equals(m));
 		assertTrue(checkClose(x.eval(), 3.1 / 2));
 		assertTrue(checkClose(sinx.eval(), 0.999));
 		assertTrue(checkClose(cosx.eval(), 0.0207));
