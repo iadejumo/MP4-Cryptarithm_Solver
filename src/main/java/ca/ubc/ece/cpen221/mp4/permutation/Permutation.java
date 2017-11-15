@@ -46,8 +46,11 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		
 		T[] singlePermutation = permutationsList.get(singlePermIndex);
 		
-		if (singlePermIndex + 1 > permutationsList.size() ) {
+		if (singlePermIndex + 1 < permutationsList.size() ) {
 			singlePermIndex++; // So that it returns all permutations in order
+		}
+		else {
+			singlePermIndex = 0;
 		}
 		
 		return singlePermutation;
