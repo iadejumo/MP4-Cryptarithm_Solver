@@ -21,13 +21,6 @@ public class PermutationsTest<T> {
 		
 		List<String[]> permutations = p.getAllPermutations();
 		
-		
-		for(String[] a: permutations) {
-			for (String s: a) {
-				System.out.print(s);
-			}
-		}
-		
 		int count = 0;
 		for(Object s: p.getOnePermutation()) {
 			count++;
@@ -46,8 +39,6 @@ public class PermutationsTest<T> {
 		Permutation<Integer> p = new Permutation<Integer>(allDigits);
 		permutations = p.getAllPermutations();
 		
-		//System.out.println(permutations);
-		
 		assertEquals(3628800, permutations.size());
 	}
 	@Test
@@ -61,16 +52,21 @@ public class PermutationsTest<T> {
 		assertEquals(23, p.getNumberOfSwaps());
 				
 		assertEquals(24, permutations.size());
-		System.out.println(permutations);
 	}
-	/*
+	
 	@Test
 	public void Test4() {
-		List<Integer> digits = new ArrayList<Integer>();
-		List<List<Integer>> permutations;
+		Integer[] digits = {0};
+		Integer[] permutations1;
+		Integer[] permutations2;
 		
-		Permutation p = new Permutation(digits);
-		permutations = p.getAllPermutations();
+		Permutation<Integer> p = new Permutation<Integer>(digits);
+		permutations1 = p.getOnePermutation();
+		permutations2 = p.getOnePermutation();
+		
+		
+		assertEquals(permutations1[0], permutations2[0]);
+
 	}
-*/
+
 }
