@@ -10,16 +10,20 @@ import java.util.List;
 
 public class Permutation<T> implements AbstractPermutation<T> {
 	// @ invariant swaps == permutationsList.size() - 1
+	// @ invariant permutationList.size == (inputArray.length)!  (! represents factorial)
 	
 	//private final List<T> allElements; //Contains all the elements are to be arranged
 	private final List<T[]> permutationsList; //Contains a list of all possible arrangements
-	private int swaps = 0; //Keeps track of how many swaps are made to generate permutations 
+	private int swaps = 0; //Keeps track of how many swaps are made to generate permutations
+	private final T[] inputArray;
+	private int singlePermIndex = 0;
 
 	/* 
 	 * Initializes Permutations class by generating a list of all possible permutations 
 	 */
 	public Permutation(T[] a) {
 		//allElements = new ArrayList <T>();
+		inputArray = a.clone();
 		permutationsList = new ArrayList<T[]>();
 		
 		if(a.length != 0) {
@@ -40,7 +44,13 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	public T[] getOnePermutation() {
 		// TODO implement this method
 		
-		return permutationsList.get(0);
+		T[] singlePermutation = permutationsList.get(singlePermIndex);
+		
+		if (singlePermIndex + 1 > permutationsList.size() ) {
+			singlePermIndex++; // So that it returns all permutations in order
+		}
+		
+		return singlePermutation;
 	}
 	
 	/*
