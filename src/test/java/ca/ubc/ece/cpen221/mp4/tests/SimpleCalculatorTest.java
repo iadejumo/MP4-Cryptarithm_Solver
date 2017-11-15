@@ -4,24 +4,23 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import ca.ubc.ece.cpen221.mp4.expression.BinaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.expression.DerivativeExpression;
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
 import ca.ubc.ece.cpen221.mp4.expression.NewtonsMethod;
+import ca.ubc.ece.cpen221.mp4.expression.NumberExpression;
+import ca.ubc.ece.cpen221.mp4.expression.UnaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
-import ca.ubc.ece.cpen221.mp4.gui.AbsoluteValueOperator;
-import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.CoseOperator;
-import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.ExponentiationOperator;
-
-import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
-import ca.ubc.ece.cpen221.mp4.gui.NegationOperator;
-import ca.ubc.ece.cpen221.mp4.gui.SineOperator;
-import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
+import ca.ubc.ece.cpen221.mp4.operator.AbsoluteValueOperator;
+import ca.ubc.ece.cpen221.mp4.operator.AdditionOperator;
+import ca.ubc.ece.cpen221.mp4.operator.CoseOperator;
+import ca.ubc.ece.cpen221.mp4.operator.DivisionOperator;
+import ca.ubc.ece.cpen221.mp4.operator.ExponentiationOperator;
+import ca.ubc.ece.cpen221.mp4.operator.MultiplicationOperator;
+import ca.ubc.ece.cpen221.mp4.operator.NegationOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
-import ca.ubc.ece.cpen221.mp4.parser.BinaryOperatorExpression;
-import ca.ubc.ece.cpen221.mp4.parser.NumberExpression;
-import ca.ubc.ece.cpen221.mp4.parser.UnaryOperatorExpression;
+import ca.ubc.ece.cpen221.mp4.operator.SineOperator;
+import ca.ubc.ece.cpen221.mp4.operator.SubtractionOperator;
 
 public class SimpleCalculatorTest {
 

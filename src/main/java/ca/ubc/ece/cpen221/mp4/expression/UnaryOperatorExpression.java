@@ -1,6 +1,5 @@
-package ca.ubc.ece.cpen221.mp4.parser;
+package ca.ubc.ece.cpen221.mp4.expression;
 
-import ca.ubc.ece.cpen221.mp4.expression.Expression;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 
 public class UnaryOperatorExpression implements Expression {

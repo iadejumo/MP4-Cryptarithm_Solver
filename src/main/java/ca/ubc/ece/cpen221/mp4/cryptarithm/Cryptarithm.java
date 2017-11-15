@@ -8,15 +8,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import ca.ubc.ece.cpen221.mp4.expression.BinaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
+import ca.ubc.ece.cpen221.mp4.expression.NumberExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
-import ca.ubc.ece.cpen221.mp4.gui.AdditionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.DivisionOperator;
-import ca.ubc.ece.cpen221.mp4.gui.MultiplicationOperator;
-import ca.ubc.ece.cpen221.mp4.gui.SubtractionOperator;
+import ca.ubc.ece.cpen221.mp4.operator.AdditionOperator;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
-import ca.ubc.ece.cpen221.mp4.parser.BinaryOperatorExpression;
-import ca.ubc.ece.cpen221.mp4.parser.NumberExpression;
+import ca.ubc.ece.cpen221.mp4.operator.DivisionOperator;
+import ca.ubc.ece.cpen221.mp4.operator.MultiplicationOperator;
+import ca.ubc.ece.cpen221.mp4.operator.SubtractionOperator;
 import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
 
 /**
@@ -25,6 +25,12 @@ import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
  */
 public class Cryptarithm {
 
+	// RI: mapOfUsedLetters, size is less than 11, no repeated letters, contains all
+	// letters in cryptarithm list
+	// RI: cryptarithm list has +-*/= in every odd index and a word of only
+	// characters in even indexes
+	// RI: cryptarithm list size is an odd number
+	// AF: cryptarithm list
 	private static final int MAX_SIZE = 10;
 	private static final int INVALID = -1;
 	private static final int MIN_SIZE = 3;
@@ -35,7 +41,6 @@ public class Cryptarithm {
 	private final Expression exp2; // expression on right of equals
 
 	// map of Strings of letters, to their respective variable expressions
-	// RI: size is less than 11, no repeated variable names
 	private final Map<String, VariableExpression> mapOfUsedLetters;
 
 	private final List<String> cryptarithm;
@@ -49,14 +54,13 @@ public class Cryptarithm {
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm, NOTE: upper case and lower case input will be treated
 	 *            as equal
-	 * @throws Illegal
-	 *             ArgumentException when cryptarithm parameter is invalid invalid
-	 *             cryptarithm include being null, having null elements being
-	 *             shorter than 3 elements, having more than 10 valid letters,
-	 *             having non-operators at odd index positions having non-letters at
-	 *             even index positions
+	 * @throws IllegalArgumentException
+	 *             when cryptarithm parameter is invalid invalid cryptarithm include
+	 *             being null, having null elements being shorter than 3 elements,
+	 *             having more than 10 different letters, having non-operators at
+	 *             odd index positions having non-letters at even index positions
 	 */
-	
+
 	public Cryptarithm(String[] cryptarithm) throws IllegalArgumentException {
 		// check for null or too short cryptarithm
 		if (!checkIfNullOrShort(cryptarithm))
@@ -261,148 +265,153 @@ public class Cryptarithm {
 	 * Find solutions to the cryptarithm
 	 * 
 	 * @return a list of all possible solutions to the given cryptarithm. A solution
-	 *         is a map that provides the value for each alphabet in the
-	 *         cryptarithm.
+	 *         is a Map<Character,Integer> that provides the value for each alphabet
+	 *         in the cryptarithm.
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
-		List<Map<Character, Integer>> solutions = new ArrayList<Map<Character, Integer>> ();
-		Integer[] allDigits = {0,1,2,3,4,5,6,7,8,9};
+		List<Map<Character, Integer>> solutions = new ArrayList<Map<Character, Integer>>();
+		Integer[] allDigits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		int numLetters = mapOfUsedLetters.size();
-		
-		//Generate all permutations of the 10 digits
-		Permutation<Integer> permutation = new Permutation<Integer> (allDigits);
+
+		// Generate all permutations of the 10 digits
+		Permutation<Integer> permutation = new Permutation<Integer>(allDigits);
 		List<Integer[]> allPermutations = permutation.getAllPermutations();
-		
-		//Creates a list of all the Letters used within the cryptarithm
+
+		// Creates a list of all the Letters used within the cryptarithm
 		List<String> lettersList = new ArrayList<String>();
 		lettersList.addAll(mapOfUsedLetters.keySet());
-		
-		//Get index of letter that appear first in the expressions
+
+		// Get index of letter that appear first in the expressions
 		List<Integer> firstLetterIndices = new ArrayList<Integer>();
-		for (String letter: firstLetters) {
+		for (String letter : firstLetters) {
 			firstLetterIndices.add(lettersList.indexOf(letter));
 		}
-		
-		//Filter out all solution where any letter that appears first is equal to zero.
+
+		// Filter out all solution where any letter that appears first is equal to zero.
 		List<Integer[]> nonZeroFirstPermutations = new ArrayList<Integer[]>();
-		for (Integer[] possiblePermutation: allPermutations) {
-			if(checkIfFirstIsZero(possiblePermutation, firstLetterIndices)) {
+		for (Integer[] possiblePermutation : allPermutations) {
+			if (checkIfFirstIsZero(possiblePermutation, firstLetterIndices)) {
 				nonZeroFirstPermutations.add(possiblePermutation);
 			}
 		}
-		
-		//Checks possible possible solutions and stores the ones that yield the correct result
-		for (Integer[] singlePermutation: nonZeroFirstPermutations) {
-			if(evaluateSingleExpression(lettersList, singlePermutation)) {
-				//Creates a map for the given solution if it is correct
-				Map<Character, Integer> singleSolution = new HashMap <Character, Integer>();
-				for(int index = 0; index < numLetters; index++) {
+
+		// Checks possible possible solutions and stores the ones that yield the correct
+		// result
+		for (Integer[] singlePermutation : nonZeroFirstPermutations) {
+			if (evaluateSingleExpression(lettersList, singlePermutation)) {
+				// Creates a map for the given solution if it is correct
+				Map<Character, Integer> singleSolution = new HashMap<Character, Integer>();
+				for (int index = 0; index < numLetters; index++) {
 					Character letter = lettersList.get(index).charAt(0);
 					Integer value = singlePermutation[index];
 					singleSolution.put(letter, value);
 				}
-				
-				//Checks whether given solution already exists within lists of solutions
+
+				// Checks whether given solution already exists within lists of solutions
 				if (solutionDoesNotExist(singleSolution, solutions)) {
 					solutions.add(singleSolution);
 				}
 			}
 		}
-		//Throws exception if no solutions are found
-		if(solutions.size() == 0) {
+		// Throws exception if no solutions are found
+		if (solutions.size() == 0) {
 			throw new NoSolutionException();
 		}
-		
+
 		return solutions;
 	}
-	
+
 	private static boolean checkClose(double arg1, double arg2) {
-		if (Math.abs(arg1-arg2) < PRECISION)
+		if (Math.abs(arg1 - arg2) < PRECISION)
 			return true;
 		return false;
 	}
-	
+
 	/*
-	 * Checks that for a given permutation none of the Characters that appear first in any expression is equals to zero
+	 * Checks that for a given permutation none of the Characters that appear first
+	 * in any expression is equals to zero
 	 * 
-	 * @param possiblePermutation
-	 * 				- permutation that would be checked
-	 * @param firstLetterIndices
-	 * 				-	indices of all the characters that appear first in the expressions
+	 * @param possiblePermutation - permutation that would be checked
 	 * 
-	 * @return true - if and only if none of the Characters that appear first in any expression is equals to zero
+	 * @param firstLetterIndices - indices of all the characters that appear first
+	 * in the expressions
+	 * 
+	 * @return true - if and only if none of the Characters that appear first in any
+	 * expression is equals to zero
 	 */
-	private boolean checkIfFirstIsZero (Integer[] possiblePermutation, List<Integer> firstLetterIndices) {
-		for(Integer indexOfFirst: firstLetterIndices) {
-			if(possiblePermutation[indexOfFirst] == 0) {
+	private boolean checkIfFirstIsZero(Integer[] possiblePermutation, List<Integer> firstLetterIndices) {
+		for (Integer indexOfFirst : firstLetterIndices) {
+			if (possiblePermutation[indexOfFirst] == 0) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/*
 	 * Checks that two solutions are different
 	 * 
-	 * @param newSolution
-	 * 				- first solution
-	 * @param existingSolution
-	 * 				- second solution
+	 * @param newSolution - first solution
+	 * 
+	 * @param existingSolution - second solution
 	 * 
 	 * @return true - if and only if the solutions are different
-	 */	
-	private boolean twoDifferentSolutions (Map<Character, Integer> newSolution, Map<Character, Integer> existingSolution){
-		for(Character c: newSolution.keySet()) {
+	 */
+	private boolean twoDifferentSolutions(Map<Character, Integer> newSolution,
+			Map<Character, Integer> existingSolution) {
+		for (Character c : newSolution.keySet()) {
 			if (!newSolution.get(c).equals(existingSolution.get(c))) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/*
-	 * Checks that the list of possible solutions does not already contain a given solution
+	 * Checks that the list of possible solutions does not already contain a given
+	 * solution
 	 * 
-	 * @param newSolution
-	 * 				- solution that has just been generated
-	 * @param solutions
-	 * 				- List of all solutions already discovered
+	 * @param newSolution - solution that has just been generated
 	 * 
-	 * @return true - if and only if the new solution is not already listed among possible solutions
-	 */	
-	private boolean solutionDoesNotExist (Map<Character, Integer> newSolution, List<Map<Character, Integer>> solutions){
-		for(Map<Character, Integer> existingSolution: solutions) {
-			if(!twoDifferentSolutions (newSolution, existingSolution)) {
+	 * @param solutions - List of all solutions already discovered
+	 * 
+	 * @return true - if and only if the new solution is not already listed among
+	 * possible solutions
+	 */
+	private boolean solutionDoesNotExist(Map<Character, Integer> newSolution, List<Map<Character, Integer>> solutions) {
+		for (Map<Character, Integer> existingSolution : solutions) {
+			if (!twoDifferentSolutions(newSolution, existingSolution)) {
 				return false;
 			}
 		}
 		return true;
 
 	}
-	
+
 	/*
-	 * Evaluates a given solution and checks that expr1 (right hand side) is equal to expr2 (left hand side)
+	 * Evaluates a given solution and checks that expr1 (right hand side) is equal
+	 * to expr2 (left hand side)
 	 * 
-	 * @param lettersList
-	 * 				- list of all the letters used in the cryptarithm
-	 * @param assigmentsList
-	 * 				- single permutation/list of assignments
+	 * @param lettersList - list of all the letters used in the cryptarithm
 	 * 
-	 * @return true - if and only if expr1 (right hand side) is equal to expr2 (left hand side) for the given solution
-	 */	
+	 * @param assigmentsList - single permutation/list of assignments
+	 * 
+	 * @return true - if and only if expr1 (right hand side) is equal to expr2 (left
+	 * hand side) for the given solution
+	 */
 	private boolean evaluateSingleExpression(List<String> lettersList, Integer[] assignmentsList) {
-		int numLetters = lettersList.size();	
-		
-		//Set the variables/letters within the  expression to the numbers in the list.
-		for(int index = 0; index < numLetters; index++) {
+		int numLetters = lettersList.size();
+
+		// Set the variables/letters within the expression to the numbers in the list.
+		for (int index = 0; index < numLetters; index++) {
 			String letter = lettersList.get(index);
 			Integer value = assignmentsList[index];
 			mapOfUsedLetters.get(letter).store(value);
 		}
-		
+
 		double expression1 = exp1.eval();
-		double expression2 = exp2.eval();		
-		
+		double expression2 = exp2.eval();
+
 		return checkClose(expression1, expression2);
 	}
 

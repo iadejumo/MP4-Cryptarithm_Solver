@@ -1,6 +1,4 @@
-package ca.ubc.ece.cpen221.mp4.parser;
-
-import ca.ubc.ece.cpen221.mp4.expression.Expression;
+package ca.ubc.ece.cpen221.mp4.expression;
 
 public class NumberExpression implements Expression {
 

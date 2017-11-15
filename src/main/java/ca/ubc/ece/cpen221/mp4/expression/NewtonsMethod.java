@@ -23,7 +23,6 @@ public class NewtonsMethod {
 		double zeroX = findFnZerosHelper(fn, independentVar, tolerance);
 		independentVar.store(storeOriginalVal);
 		return zeroX;
-
 	}
 
 	private static double findFnZerosHelper(Expression fn, VariableExpression independentVar, double tolerance) {

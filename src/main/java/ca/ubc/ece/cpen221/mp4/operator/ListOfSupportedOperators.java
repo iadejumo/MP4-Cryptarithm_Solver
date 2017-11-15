@@ -1,9 +1,7 @@
-package ca.ubc.ece.cpen221.mp4.gui;
+package ca.ubc.ece.cpen221.mp4.operator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 public class ListOfSupportedOperators {
 

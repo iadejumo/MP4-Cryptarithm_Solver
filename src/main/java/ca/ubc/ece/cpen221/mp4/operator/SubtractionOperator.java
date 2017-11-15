@@ -1,6 +1,4 @@
-package ca.ubc.ece.cpen221.mp4.gui;
-
-import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
+package ca.ubc.ece.cpen221.mp4.operator;
 
 public class SubtractionOperator implements BinaryOperator {
 

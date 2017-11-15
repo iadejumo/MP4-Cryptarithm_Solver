@@ -1,6 +1,4 @@
-package ca.ubc.ece.cpen221.mp4.gui;
-
-import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
+package ca.ubc.ece.cpen221.mp4.operator;
 
 public class SineOperator implements UnaryOperator {
 

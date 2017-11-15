@@ -1,6 +1,9 @@
 package ca.ubc.ece.cpen221.mp4.parser;
 
+import ca.ubc.ece.cpen221.mp4.expression.BinaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
+import ca.ubc.ece.cpen221.mp4.expression.NumberExpression;
+import ca.ubc.ece.cpen221.mp4.expression.UnaryOperatorExpression;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 

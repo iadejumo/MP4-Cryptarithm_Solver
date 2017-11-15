@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import ca.ubc.ece.cpen221.mp4.operator.ListOfSupportedOperators;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 /**

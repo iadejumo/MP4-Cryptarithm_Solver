@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.gui.ListOfSupportedOperators;
+import ca.ubc.ece.cpen221.mp4.operator.ListOfSupportedOperators;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 /**
