@@ -14,6 +14,9 @@ package ca.ubc.ece.cpen221.mp4.expression;
  */
 public class VariableExpression implements Expression {
 
+	// RI = name != null
+	
+	// AF = name x value
 	private String name;
 	private double value;
 
@@ -21,18 +24,28 @@ public class VariableExpression implements Expression {
 	 * Constructs a variable with the specified name, whose initial value is zero.
 	 * 
 	 * @param name
-	 *            the name of the variable
+	 *            the name of the variable must not be null
 	 */
 	public VariableExpression(String name) {
 		this.name = name;
 		this.value = 0;
 	}
 
+	/**
+	 * Returns the VariableExpression's value
+	 * 
+	 * @return the VariableExpression's value
+	 */
 	@Override
 	public double eval() {
 		return value;
 	}
 
+	/**
+	 * Creates a String representation of the unary operator expression
+	 * 
+	 * @return a printable representation of the unary operator expression
+	 */
 	@Override
 	public String toString() {
 		return name;

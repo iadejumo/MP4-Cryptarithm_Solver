@@ -6,6 +6,10 @@ package ca.ubc.ece.cpen221.mp4.expression;
  */
 public class DerivativeExpression implements Expression {
 
+	// RI = fn,independentVar != null
+	
+	// AF = fn x independentVar
+	
 	public static final double DELTA_X = Math.pow(10, -9);
 	private final Expression fn;
 	private final VariableExpression independentVar;
@@ -16,8 +20,10 @@ public class DerivativeExpression implements Expression {
 	 * 
 	 * @param fn
 	 *            the function whose derivative this expression represents
+	 *            fn must not be null
 	 * @param independentVar
 	 *            the variable with respect to which we're differentiating
+	 *            must not be null
 	 */
 	public DerivativeExpression(Expression fn, VariableExpression independentVar) {
 		this.fn = fn;
@@ -28,7 +34,6 @@ public class DerivativeExpression implements Expression {
 	/**
 	 * Evaluates the derivative of the function at the variable expression's stored
 	 * value
-	 * 
 	 * 
 	 * @return a double that is the value of the derivative of the function at the
 	 *         variable expression's stored value
@@ -45,7 +50,7 @@ public class DerivativeExpression implements Expression {
 	@Override
 	/**
 	 * Overrides the toString of the DerivativeExpression
-	 * 
+	 * Returns a String representation of the derivative expression 
 	 * 
 	 * @return a String showing that what function that this DerivativeExpression
 	 *         differentiates

@@ -25,12 +25,13 @@ import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
  */
 public class Cryptarithm {
 
-	// RI: mapOfUsedLetters, size is less than 11, no repeated letters, contains all
-	// letters in cryptarithm list
-	// RI: cryptarithm list has +-*/= in every odd index and a word of only
+	// RI: mapOfUsedLetters.size() < 11, has no repeated letters, 
+	//contains all letters in cryptarithm list
+	// RI: cryptarithm list has (+-*/=) in every odd index and a word of only
 	// characters in even indexes
-	// RI: cryptarithm list size is an odd number
-	// AF: cryptarithm list
+	// RI: cryptarithm.size() is an odd number and contains "="
+	// AF: cryptarithm=
+	
 	private static final int MAX_SIZE = 10;
 	private static final int INVALID = -1;
 	private static final int MIN_SIZE = 3;

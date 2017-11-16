@@ -2,14 +2,20 @@ package ca.ubc.ece.cpen221.mp4.expression;
 
 public class NewtonsMethod {
 
+	//RI = none
+	//AF = none b/c no fields
+	
 	/**
 	 * Returns a zero of the specified function using Newton’s method with
 	 * approxZero as the initial estimate.
 	 **
 	 * @param fn
-	 *            the function whose zero is to be found
+	 *            the function whose zero is to be found must be a function that
+	 *            converges to 0 when using Newton's Method functions that don't
+	 *            reach 0 or have undefined derivatives or slopes of 0 may not work
+	 *            must not be null
 	 * @param x
-	 *            the independent variable of the function
+	 *            the independent variable of the function must not be null
 	 * @param approxZero
 	 *            initial approximation for the zero of the function
 	 * @param tolerance

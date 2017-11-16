@@ -2,11 +2,15 @@ package ca.ubc.ece.cpen221.mp4.operator;
 
 public class SineOperator implements UnaryOperator {
 
+	// RI: None
+	// AF: None
+
 	/**
 	 * Calculate and returns the sine of arg
 	 * 
-	 * @param double arg - the operand to be used to calculate the sin value
-	 * 						can be any double
+	 * @param arg
+	 *            - the operand to be used to calculate the sin value can be any
+	 *            double
 	 * 
 	 * @return a double that is sin(arg)
 	 */
@@ -15,7 +19,7 @@ public class SineOperator implements UnaryOperator {
 	public double apply(double arg) {
 		return Math.sin(arg);
 	}
-	
+
 	/**
 	 * Creates a String representation of the sine operator
 	 * 

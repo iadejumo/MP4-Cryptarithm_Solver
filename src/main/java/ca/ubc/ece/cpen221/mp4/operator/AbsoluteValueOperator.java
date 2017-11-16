@@ -2,11 +2,15 @@ package ca.ubc.ece.cpen221.mp4.operator;
 
 public class AbsoluteValueOperator implements UnaryOperator {
 
+	// RI: None
+	// AF: None
+	
 	/**
 	 * Calculate and returns the absolute value to the argument.
 	 * 
-	 * @param double arg - the value whose absolute value will be calculated 
-	 * 						can be any double
+	 * @param arg
+	 *            - the value whose absolute value will be calculated can be any
+	 *            double
 	 * 
 	 * @return a double that is the absolute value of the arg
 	 */
@@ -16,7 +20,7 @@ public class AbsoluteValueOperator implements UnaryOperator {
 			return (-arg);
 		return (arg);
 	}
-	
+
 	/**
 	 * Creates a String representation of the absolute value operator
 	 * 

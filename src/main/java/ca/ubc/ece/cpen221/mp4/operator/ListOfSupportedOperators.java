@@ -5,6 +5,9 @@ import java.util.List;
 
 public class ListOfSupportedOperators {
 
+	//RI: None 
+    //AF: None
+	
 	/**
 	 * Returns a list of operators containing all currently supported Operators
 	 * 
