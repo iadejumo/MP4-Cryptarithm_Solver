@@ -8,7 +8,7 @@ Isaiah Adejumo - 23345168;
 WORK-DIVISION
 ===
 
-1. Calculators & Algebra \s\s
+1. Calculators & Algebra -break\s\s
 	1.1 Common Operations
 		-Tyler: 1.5 hours
 	1.2 Implementing Calculator Expression
