@@ -14,29 +14,27 @@ import ca.ubc.ece.cpen221.mp4.cryptarithm.NoSolutionException;
 public class CryptarithmSolverTests {
 
 	@Test
-	public void Test1() throws NoSolutionException {
+	public void test1() throws NoSolutionException {
 		String[] c = {"SEND","+","MORE","=","MONEY"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
-	public void Test2() throws NoSolutionException {
+	public void test2() throws NoSolutionException {
 		String[] c = {"WINTER","+","IS","+","WINDIER","+","SUMMER","+","IS","=","SUNNIER"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
-	public void Test3() throws NoSolutionException {
+	public void test3() throws NoSolutionException {
 		String[] c = {"NORTH","/","SOUTH","=","EAST","/","WEST"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
@@ -48,7 +46,7 @@ public class CryptarithmSolverTests {
 	}
 	
 	@Test
-	public void Test4() throws NoSolutionException {
+	public void test4() throws NoSolutionException {
 		String[] c = {"JEDER","+","LIEBT","=","BERLIN"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
@@ -59,7 +57,7 @@ public class CryptarithmSolverTests {
 	}
 	
 	@Test (expected = Exception.class)
-	public void Test5() throws NoSolutionException {
+	public void test5() throws NoSolutionException {
 		String[] c = {"I","+","CANT","+","GET","=","NO","+","SATISFACTION"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
@@ -68,4 +66,50 @@ public class CryptarithmSolverTests {
 		assertEquals(0, solutions.size());
 		System.out.println(solutions);
 	}
+	
+	@Test
+	public void test6() throws NoSolutionException {
+		String[] c = {"CASSATT", "+", "COROT", "+", "MANET", "+", "MIRO", "+", "RENOIR", "=", "ARTISTS"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+		System.out.println(solutions);
+	}
+	
+	@Test
+	public void test7() throws NoSolutionException {
+		String[] c = {"L", "-", "L", "=", "O"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(0, solutions.size());
+		System.out.println(solutions);
+	}
+	
+	@Test
+	public void test8() throws NoSolutionException {
+		String[] c = {"CAIN", "+", "SIN", "+", "MICAH", "+", "SARAH", "+", "CANAAN", "+", "ISAIAH", "+", "MANNA", "+", "NEHEMIAH", "+", "SACRAMENT", "=", "CHRISTIAN"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+		System.out.println(solutions);
+	}
+	
+	@Test
+	public void test9() throws NoSolutionException {
+		String[] c = {"MARS", "+", "SATURN", "+", "URANUS", "+", "NEPTUNE", "=", "PLANETS"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+		System.out.println(solutions);
+	}
+	
+	
 }

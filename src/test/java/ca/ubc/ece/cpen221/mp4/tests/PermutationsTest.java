@@ -13,7 +13,7 @@ import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
 public class PermutationsTest<T> {
 	
 	@Test
-	public void Test1() {
+	public void test1() {
 		String[] list = {"r", "g", "b"};
 		
 		
@@ -32,7 +32,7 @@ public class PermutationsTest<T> {
 	}
 	
 	@Test
-	public void Test2() {
+	public void test2() {
 		Integer[] allDigits = {0,1,2,3,4,5,6,7,8,9};
 		List<Integer[]> permutations;
 		
@@ -42,7 +42,7 @@ public class PermutationsTest<T> {
 		assertEquals(3628800, permutations.size());
 	}
 	@Test
-	public void Test3() {
+	public void test3() {
 		Integer[] digits = {0,1,2,3};
 		List<Integer[]> permutations;
 		
@@ -55,7 +55,7 @@ public class PermutationsTest<T> {
 	}
 	
 	@Test
-	public void Test4() {
+	public void test4() {
 		Integer[] digits = {0};
 		Integer[] permutations1;
 		Integer[] permutations2;

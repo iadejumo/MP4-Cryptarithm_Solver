@@ -10,6 +10,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	// @ invariant swaps == permutationsList.size() - 1
 	// @ invariant permutationList.size == (inputArray.length)! (! represents
 	// factorial)
+	// @ abstract function = permutationsList
 
 	private final List<T[]> permutationsList; // Contains a list of all possible arrangements
 	private int swaps = 0; // Keeps track of how many swaps are made to generate permutations
@@ -18,12 +19,14 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	/*
 	 * Initializes Permutations class by generating a list of all possible
 	 * permutations
+	 * 
+	 * @param inputArray -must not be null
+	 * 				- does not contain repeated numbers
 	 */
 	public Permutation(T[] inputArray) {
 		permutationsList = new ArrayList<T[]>();
 
 		if (inputArray.length != 0) {
-			// allElements.addAll(a);
 			generate(inputArray.length, inputArray);
 		}
 
@@ -40,11 +43,10 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	@Override
 	public T[] getOnePermutation() {
 		T[] singlePermutation = permutationsList.get(singlePermIndex);
-		
-		if (singlePermIndex + 1 < permutationsList.size() ) {
+
+		if (singlePermIndex + 1 < permutationsList.size()) {
 			singlePermIndex++; // So that it returns all permutations in order
-		}
-		else {
+		} else {
 			singlePermIndex = 0;
 		}
 		return singlePermutation;
