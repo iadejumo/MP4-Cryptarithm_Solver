@@ -8,6 +8,7 @@ Isaiah Adejumo - 23345168;
 WORK-DIVISION
 ===
 
+**** TYler is cool
 1. Calculators & Algebra
 	1.1 Common Operations
 		-Tyler: 1.5 hours
