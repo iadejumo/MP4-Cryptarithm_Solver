@@ -53,7 +53,6 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(2, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test (expected = Exception.class)
@@ -64,7 +63,6 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(0, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
@@ -75,7 +73,6 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
@@ -86,7 +83,6 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(0, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
@@ -97,7 +93,6 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
-		System.out.println(solutions);
 	}
 	
 	@Test
@@ -108,8 +103,21 @@ public class CryptarithmSolverTests {
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
-		System.out.println(solutions);
 	}
 	
+	/*
+	@Test
+	public void test10() throws NoSolutionException {
+		String[] c = {"APPERCEPTION", "+", "ARISTOCRATIC", "+", "CONCESSIONAIRE", "+", "CONSCRIPTION", "+", "INAPPROPRIATE",
+			    "+", "INCAPACITATE", "+", "INCONSISTENT", "+", "INTERCEPTION", "+", "OSTEOPOROSIS", "+", "PERSPIRATION",
+			    "+", "PRESCRIPTION", "+", "PROSCRIPTION", "+", "PROSOPOPOEIA", "+", "PROTECTORATE", "+", "PROTESTATION",
+			    "+", "STATISTICIAN", "+", "TRANSOCEANIC", "+", "TRANSPIRATION", "=", "ANTIPERSPIRANT"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+	}
+	*/
 	
 }
