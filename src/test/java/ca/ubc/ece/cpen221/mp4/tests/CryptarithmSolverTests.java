@@ -40,7 +40,6 @@ public class CryptarithmSolverTests {
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
 		
-		System.out.println(solutions);
 		assertEquals(1, solutions.size());
 		
 	}
@@ -98,6 +97,16 @@ public class CryptarithmSolverTests {
 	@Test
 	public void test9() throws NoSolutionException {
 		String[] c = {"MARS", "+", "SATURN", "+", "URANUS", "+", "NEPTUNE", "=", "PLANETS"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+	}
+	
+	@Test
+	public void test10() throws NoSolutionException {
+		String[] c = {"TWO", "*", "TWO", "=", "THREE"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
