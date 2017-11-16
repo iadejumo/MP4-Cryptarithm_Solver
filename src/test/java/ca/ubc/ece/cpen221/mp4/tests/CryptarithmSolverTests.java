@@ -74,7 +74,7 @@ public class CryptarithmSolverTests {
 		assertEquals(1, solutions.size());
 	}
 	
-	@Test
+	@Test (expected = Exception.class)
 	public void test7() throws NoSolutionException {
 		String[] c = {"L", "-", "L", "=", "O"};
 		Cryptarithm crypt = new Cryptarithm(c);
@@ -114,19 +114,24 @@ public class CryptarithmSolverTests {
 		assertEquals(1, solutions.size());
 	}
 	
-	/*
 	@Test
-	public void test10() throws NoSolutionException {
-		String[] c = {"APPERCEPTION", "+", "ARISTOCRATIC", "+", "CONCESSIONAIRE", "+", "CONSCRIPTION", "+", "INAPPROPRIATE",
-			    "+", "INCAPACITATE", "+", "INCONSISTENT", "+", "INTERCEPTION", "+", "OSTEOPOROSIS", "+", "PERSPIRATION",
-			    "+", "PRESCRIPTION", "+", "PROSCRIPTION", "+", "PROSOPOPOEIA", "+", "PROTECTORATE", "+", "PROTESTATION",
-			    "+", "STATISTICIAN", "+", "TRANSOCEANIC", "+", "TRANSPIRATION", "=", "ANTIPERSPIRANT"};
+	public void test11() throws NoSolutionException {
+		String[] c = {"A", "+", "AS", "=", "MOM"};
 		Cryptarithm crypt = new Cryptarithm(c);
 		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
 		solutions = crypt.solve();
 		
 		assertEquals(1, solutions.size());
 	}
-	*/
+	
+	@Test
+	public void test12() throws NoSolutionException {
+		String[] c = {"I", "+", "DID", "=", "TOO"};
+		Cryptarithm crypt = new Cryptarithm(c);
+		List<Map<Character,Integer>> solutions = new ArrayList<Map<Character,Integer>>();
+		solutions = crypt.solve();
+		
+		assertEquals(1, solutions.size());
+	}
 	
 }

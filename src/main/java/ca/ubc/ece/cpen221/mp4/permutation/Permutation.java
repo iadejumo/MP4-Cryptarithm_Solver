@@ -20,8 +20,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	 * Initializes Permutations class by generating a list of all possible
 	 * permutations
 	 * 
-	 * @param inputArray -must not be null
-	 * 				- does not contain repeated numbers
+	 * @param inputArray -must not be null - does not contain repeated numbers
 	 */
 	public Permutation(T[] inputArray) {
 		permutationsList = new ArrayList<T[]>();
@@ -43,9 +42,10 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	@Override
 	public T[] getOnePermutation() {
 		T[] singlePermutation = permutationsList.get(singlePermIndex);
-
+		
+		// So that it returns all permutations in order, and resets when all have been returned
 		if (singlePermIndex + 1 < permutationsList.size()) {
-			singlePermIndex++; // So that it returns all permutations in order
+			singlePermIndex++; 
 		} else {
 			singlePermIndex = 0;
 		}
