@@ -5,7 +5,11 @@ import java.util.List;
 
 public class ListOfSupportedOperators {
 
-	
+	/**
+	 * Returns a list of operators containing all currently supported Operators
+	 * 
+	 * @return a List<Operator>  containing all currently supported Operators
+	 */
 	public static List<Operator> getList(){
 		List<Operator> supportedOperators = new ArrayList<Operator>();
 		
