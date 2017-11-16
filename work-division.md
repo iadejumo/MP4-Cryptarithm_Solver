@@ -29,7 +29,7 @@ WORK-DIVISION
 
 	2.1 A Reusable Permutation Generator  
 
-		-Isaiah:  
+		-Isaiah:  6 hours
 
 	2.2 Representing Cryptarithms  
 
@@ -37,7 +37,7 @@ WORK-DIVISION
 
 	2.3 Solving Cryptarithms  
 
-		-Isaiah:  
+		-Isaiah:  2 hours
 
 **3. Debugging AVL Tree**  
 
